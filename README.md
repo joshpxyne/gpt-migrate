@@ -2,7 +2,7 @@
 
 ## Easily migrate your code from one framework or language to another.
 
-Currently supports REST APIs primarily.
+If you've ever faced the pain of migrating a codebase to a new framework or language, this project is for you. Currently supports REST APIs primarily. Not production-ready.
 
 Usage: `python3 main.py --targetlang node`
 
