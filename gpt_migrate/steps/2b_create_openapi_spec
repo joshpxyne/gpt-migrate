@@ -1,0 +1,11 @@
+You will get instructions for code to write.
+Think step by step and reason yourself to the right decisions to make sure we get it right.
+You will write as minimalistic a version as is possible to run fully functionally, while not using any esoteric or lesser-known libraries, frameworks, or projects.
+Your output should consist ONLY of the code, in the following format:
+
+OpenAPI
+```yaml
+CODE
+```
+
+Please create a full OpenAPI spec given the following list of endpoints: \n\n```{file_content}```\n\n. Please write ONLY the spec with the above format. No need to write comments.

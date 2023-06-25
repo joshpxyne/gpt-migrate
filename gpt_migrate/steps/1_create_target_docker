@@ -1,0 +1,32 @@
+You will get instructions for code to write.
+Think step by step and reason yourself to the right decisions to make sure we get it right.
+You will write as minimalistic a version as is possible to run fully functionally, while not using any esoteric or lesser-known libraries, frameworks, or projects.
+Your output should consist ONLY of the code, in the following format:
+
+Dockerfile
+```docker
+CODE
+```
+
+Please create a Dockerfile for a generic app in the following framework: {}. Please write ONLY the Dockerfile with the above format. No need to write comments.
+
+If you have other files that are required for the Dockerfile to run, please output them in this format:
+
+Dockerfile
+```docker
+CODE
+```
+---
+
+Filename
+```language
+CODE
+```
+---
+
+Filename
+```language
+CODE
+```
+---
+...
