@@ -151,6 +151,7 @@ def main(
         with yaspin(text=f"Generating APIs...", spinner="dots") as spinner:
             code_completions = ai.write_code_openai(prompt)
             
+        print(code_completions)
 
         for code_completion in code_completions:
             output_filename,_,output_file_content = code_completion

@@ -27,7 +27,7 @@ def parse_code_string(code_string):
         match = pattern.match(section)
         if match:
             filename, language, code = match.groups()
-            code_triples.append((filename.strip(), language.strip(), code.strip()))
+            code_triples.append((section.split("\n```")[0], language.strip(), code.strip()))
     
     return code_triples
 
@@ -71,6 +71,7 @@ class AI:
             max_tokens=10000,
             temperature=0.9
         )
+        print(response["choices"][0]["message"]["content"])
         code_triples = parse_code_string(response["choices"][0]["message"]["content"])
         return code_triples
 

@@ -1,13 +1,13 @@
 openapi: 3.0.0
 info:
-  title: Grocery Items API
+  title: Grocery API
   version: 1.0.0
 paths:
   /grocery_items:
     get:
       summary: Get all grocery items
       responses:
-        "200":
+        200:
           description: A list of grocery items
           content:
             application/json:
@@ -18,21 +18,20 @@ paths:
     post:
       summary: Add a new grocery item
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/GroceryItem'
       responses:
-        "201":
-          description: The created grocery item
+        201:
+          description: Grocery item added successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GroceryItem'
   /grocery_items/{item_id}:
     put:
-      summary: Update an existing grocery item
+      summary: Update a grocery item
       parameters:
         - name: item_id
           in: path
@@ -40,19 +39,18 @@ paths:
           schema:
             type: integer
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/GroceryItem'
       responses:
-        "200":
-          description: The updated grocery item
+        200:
+          description: Grocery item updated successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GroceryItem'
-        "404":
+        404:
           description: Item not found
           content:
             application/json:
@@ -70,8 +68,8 @@ paths:
           schema:
             type: integer
       responses:
-        "200":
-          description: Item deleted
+        200:
+          description: Grocery item deleted successfully
           content:
             application/json:
               schema:

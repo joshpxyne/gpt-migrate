@@ -8,7 +8,7 @@ Filename
 CODE
 ```
 
-You will be given a Dockerfile and a source API endpoints file. Your job is to write a new file using the {targetlang} framework that can be invoked by the Dockerfile.
+You will be given a Dockerfile and a source API endpoints file. Your job is to write a new file using the {targetlang} framework that can be invoked by the Dockerfile. DO NOT create a requirements.txt file. ONLY create the resulting app or main file.
 
 \n\n
 

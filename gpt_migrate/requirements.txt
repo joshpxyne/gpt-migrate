@@ -1,3 +1,4 @@
 typer
 langchain
 yaspin
+openai
