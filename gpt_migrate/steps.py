@@ -15,6 +15,13 @@ FILENAMES = "p4_output_formats/filenames"
 MULTIFILE = "p4_output_formats/multi_file"
 SINGLEFILE = "p4_output_formats/single_file"
 
+CONTEXT_WINDOWS = {
+    "gpt-4-32k": 32000,
+    "gpt-3.5-turbo-16k": 16000,
+    "gpt-4": 4000,
+    "gpt-3.5-turbo": 4000,
+}
+
 def prompt_constructor(*args):
     prompt = ""
     for arg in args:
@@ -29,6 +36,7 @@ def create_environment(globals):
                                                 WRITE_CODE, 
                                                 CREATE_DOCKER, 
                                                 SINGLEFILE)
+    
     prompt = docker_prompt_template.format(targetlang=globals.targetlang)
 
     with yaspin(text="Creating your environment...", spinner="dots") as spinner:
@@ -108,7 +116,6 @@ def create_target_APIs(globals):
 
     
     for file_name in relevant_files_list:
-        # Read the content of the file
         file_path = os.path.join(globals.sourcedir, file_name)
         with open(file_path, 'r') as file:
             file_content = file.read()
@@ -126,7 +133,6 @@ def create_target_APIs(globals):
             with open(output_path, 'w') as output_file:
                 output_file.write(output_file_content)
 
-        # Output text in color
         spinner.ok("✅ ")
         success_text = typer.style(f"Created API endpoints for {file_name} at {output_path}", fg=typer.colors.GREEN)
         typer.echo(success_text)
