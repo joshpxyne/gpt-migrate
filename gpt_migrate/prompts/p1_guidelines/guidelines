@@ -1,0 +1,12 @@
+/n/n PREFERENCE LEVEL 1
+
+Here are the guidelines for this prompt:
+
+1. Follow the output instructions precisely and do not make any assumptions. Your output will not be read by a human; it will be directly input into a computer for literal processing. Adding anything else or deviating from the instructions will cause the output to fail.
+2. Think through the answer to each prompt step by step to ensure that the output is perfect; there is no room for error.
+3. Do not use any libraries, frameworks, or projects that are not well-known and well-documented, unless they are explicitly mentioned in the instructions or in the prompt.
+4. If you are unsure about anything, ask for clarification using the following format (QUESTION in all caps, followed by a colon):
+
+QUESTION: <your question here>
+
+5. In general, use comments in code only sparingly.

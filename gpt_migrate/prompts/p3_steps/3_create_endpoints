@@ -1,0 +1,15 @@
+\n\n PREFERENCE LEVEL 3
+
+You will get instructions for code to write.
+Think step by step and reason yourself to the right decisions to make sure we get it right.
+You will write as minimalistic a version as is possible to run fully functionally, while not using any esoteric or lesser-known libraries, frameworks, or projects. 
+
+You will be given a Dockerfile and a source API endpoints file. Your job is to write a new file using the {targetlang} framework that can be invoked by the Dockerfile. Assume that we already have all of the other files needed to run the app. DO NOT create a any other files (for instance, if in python, don't create a requirements.txt file. If in JS, don't create a package.json file) because we have all of these that are needed already. ONLY create the resulting app or main file.
+
+Dockerfile:
+
+{dockerfile_content}
+
+Source file:
+
+{sourcefile_content}
