@@ -1,3 +1,7 @@
 \n\n PREFERENCE LEVEL 4
 
-Please provide the filenames or paths relative to the project directory in comma separated format. For instance, file1.ext,file2.ext,file3.ext.... If there are none that are obvious, please write only "NONE FOUND" and nothing else.
+Please respond only with a comma-separated list of items: 
+
+dep1,dep2,dep3...
+
+Please do not include any other information in your answer. The content of your output will be directly read into a file and any deviation will cause this process to fail. If your list is empty, please instead write only NONE.

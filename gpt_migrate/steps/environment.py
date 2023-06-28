@@ -1,11 +1,5 @@
 from utils import prompt_constructor, llm_write_file
-import os
-
-HIERARCHY = "HIERARCHY"
-GUIDELINES = "p1_guidelines/guidelines"
-WRITE_CODE = "p2_actions/write_code"
-CREATE_DOCKER = "p3_steps/1_create_target_docker"
-SINGLEFILE = "p4_output_formats/single_file"
+from config import HIERARCHY, GUIDELINES, WRITE_CODE, CREATE_DOCKER, SINGLEFILE
 
 def create_environment(globals):
 

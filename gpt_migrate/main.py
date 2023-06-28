@@ -1,13 +1,13 @@
 import typer
 from utils import detect_language, build_directory_structure
 import os
+import time as time
+
+from ai import AI
 
 from steps.environment import create_environment
 from steps.migrate import get_dependencies, write_migration
 
-import time as time
-
-from ai import AI
 
 app = typer.Typer()
 

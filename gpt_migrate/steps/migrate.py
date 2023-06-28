@@ -1,14 +1,6 @@
 from utils import prompt_constructor, llm_write_file, llm_run, build_directory_structure
+from config import HIERARCHY, GUIDELINES, WRITE_CODE, GET_EXTERNAL_DEPS, GET_INTERNAL_DEPS, WRITE_MIGRATION, SINGLEFILE
 import os
-
-HIERARCHY = "HIERARCHY"
-GUIDELINES = "p1_guidelines/guidelines"
-WRITE_CODE = "p2_actions/write_code"
-GET_EXTERNAL_DEPS = "p3_steps/2_get_external_deps"
-GET_INTERNAL_DEPS = "p3_steps/3_get_internal_deps"
-WRITE_MIGRATION = "p3_steps/4_write_migration"
-MULTIFILE = "p4_output_formats/multi_file"
-SINGLEFILE = "p4_output_formats/single_file"
 
 
 def get_dependencies(sourcefile,globals):

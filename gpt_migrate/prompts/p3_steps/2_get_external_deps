@@ -6,7 +6,7 @@ You are a principal software engineer at Google with particular expertise migrat
 {sourcefile_content}
 ```
 
-If there are no outside libraries, answer only NONE. If there are libraries, please list them in the following comma-separated format as such:
+If there are no outside libraries, answer only NONE. If there are libraries, please list them in the following format:
 
 dep1,dep2,dep3...
 
