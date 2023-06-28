@@ -4,6 +4,7 @@ from yaspin import yaspin
 from collections import Counter
 import fnmatch
 import re
+import shutil
 
 def detect_language(source_directory):
 
@@ -65,6 +66,19 @@ def prompt_constructor(*args):
             prompt += file.read().strip()
     return prompt
 
+def llm_run(prompt,waiting_message,success_message,globals):
+    
+    output = ""
+    with yaspin(text=waiting_message, spinner="dots") as spinner:
+        output = globals.ai.run(prompt)
+        spinner.ok("✅ ")
+
+    if success_message:
+        success_text = typer.style(success_message, fg=typer.colors.GREEN)
+        typer.echo(success_text)
+    
+    return output
+
 def llm_write_file(prompt,target_path,waiting_message,success_message,globals):
     
     file_content = ""
@@ -88,18 +102,31 @@ def llm_write_file(prompt,target_path,waiting_message,success_message,globals):
     
     return file_name, language, file_content
 
-def llm_run(prompt,waiting_message,success_message,globals):
+def llm_write_files(prompt,target_path,waiting_message,success_message,globals):
     
-    output = ""
+    file_content = ""
     with yaspin(text=waiting_message, spinner="dots") as spinner:
-        output = globals.ai.run(prompt)
+        results = globals.ai.write_code(prompt)
         spinner.ok("✅ ")
 
+    for result in results:
+        file_name,language,file_content = result
+
+        if target_path:
+            with open(os.path.join(globals.targetdir, target_path), 'w') as file:
+                file.write(file_content)
+        else:
+            with open(os.path.join(globals.targetdir, file_name), 'w') as file:
+                file.write(file_content)
+
+        if not success_message:
+            success_text = typer.style(f"Created {file_name} at {globals.targetdir}", fg=typer.colors.GREEN)
+            typer.echo(success_text)
     if success_message:
         success_text = typer.style(success_message, fg=typer.colors.GREEN)
         typer.echo(success_text)
     
-    return output
+    return results
 
 def load_templates_from_directory(directory_path):
     templates = {}
@@ -170,3 +197,15 @@ def build_directory_structure(path='.', indent='', is_last=True, parent_prefix='
                 result += build_directory_structure(entry_path, indent + '    ', index == len(entries) - 1, parent_prefix + new_parent_prefix, is_root=False)
 
     return result
+
+def copy_files(sourcedir, targetdir, excluded_files=[]):
+    gitignore_patterns = read_gitignore(sourcedir) + [".gitignore"]
+    for item in os.listdir(sourcedir):
+        if os.path.isfile(os.path.join(sourcedir, item)):
+            if item.endswith(('.env', '.txt', '.json', '.yml', '.yaml')) and item not in excluded_files:
+                if not is_ignored(item, gitignore_patterns):
+                    os.makedirs(targetdir, exist_ok=True)
+                    shutil.copy(os.path.join(sourcedir, item), targetdir)
+                    typer.echo(typer.style(f"Copied {item} from {sourcedir} to {targetdir}", fg=typer.colors.GREEN))
+        else:
+            copy_files(os.path.join(sourcedir, item), os.path.join(targetdir, item))

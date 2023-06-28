@@ -6,7 +6,7 @@ import time as time
 from ai import AI
 
 from steps.environment import create_environment
-from steps.migrate import get_dependencies, write_migration
+from steps.migrate import get_dependencies, write_migration, add_env_files
 
 
 app = typer.Typer()
@@ -30,7 +30,8 @@ def main(
         sourcelang: str = typer.Option(None, help="Source language or framework of the code to be migrated."),
         sourceentry: str = typer.Option("app.py", help="Entrypoint filename relative to the source directory. For instance, this could be an app.py or main.py file for Python."),
         targetdir: str = typer.Option("../benchmarks/multi_endpoint/flask-nodejs/target", help="Directory where the migrated code will live."),
-        targetlang: str = typer.Option("nodejs", help="Target language or framework for migration.")
+        targetlang: str = typer.Option("nodejs", help="Target language or framework for migration."),
+        step: str = typer.Option("all", help="Step to run. Options are 'setup', 'migrate', 'test', 'all'.")
     ):
 
     ai = AI(
@@ -67,23 +68,25 @@ def main(
     typer.echo(typer.style("\n • Source directory structure: \n\n" + source_directory_structure, fg=typer.colors.BLUE))
 
 
-    '''
-    Setup
-    '''
-    create_environment(globals)
+    ''' 1. Setup '''
+    if step in ['setup', 'all']:
+        create_environment(globals)
 
-    '''
-    Migration
-    '''
+    ''' 2. Migration '''
+    if step in ['migrate', 'all']:
+        # recursively work through each of the files in the source directory, starting with the entrypoint.
+        def migrate(sourcefile, globals):
+            internal_deps_list, external_deps_list = get_dependencies(sourcefile=sourcefile,globals=globals)
+            for dependency in internal_deps_list:
+                migrate(dependency, globals)
+            write_migration(sourcefile, external_deps_list, globals)
 
-    # recursively work through each of the files in the source directory, starting with the entrypoint.
-    def migrate(sourcefile, globals):
-        internal_deps_list, external_deps_list = get_dependencies(sourcefile=sourcefile,globals=globals)
-        for dependency in internal_deps_list:
-            migrate(dependency, globals)
-        write_migration(sourcefile, external_deps_list, globals)
+        migrate(sourceentry, globals)
+        add_env_files(globals)
 
-    migrate(sourceentry, globals)
+    ''' 3. Testing '''
+    if step in ['test', 'all']:
+        pass
 
 
 if __name__ == "__main__":
