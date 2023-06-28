@@ -1,10 +1,8 @@
-from langchain.prompts import PromptTemplate
 from langchain.llms import OpenAI
-from langchain.chains import LLMChain
 from config import OPENAI_API_KEY
 import os
 import openai
-from utils import parse_code_string, load_templates_from_directory
+from utils import parse_code_string
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -20,7 +18,7 @@ class AI:
             self.model = OpenAI(model_name="gpt-3.5-turbo", temperature=temperature, openai_api_key=OPENAI_API_KEY)
             self.model_name = "gpt-3.5-turbo"
     
-    def write_code_openai(self, prompt):
+    def write_code(self, prompt):
         message=[{"role": "user", "content": prompt}] 
         response = openai.ChatCompletion.create(
             messages=message,
@@ -29,11 +27,10 @@ class AI:
             max_tokens=self.max_tokens,
             temperature=self.temperature
         )
-        print(response["choices"][0]["message"]["content"])
         code_triples = parse_code_string(response["choices"][0]["message"]["content"])
         return code_triples
 
-    def run_openai(self, prompt):
+    def run(self, prompt):
         message=[{"role": "user", "content": prompt}] 
         response = openai.ChatCompletion.create(
             messages=message,

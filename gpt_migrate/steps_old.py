@@ -15,41 +15,25 @@ CONTEXT_WINDOWS = {
 def create_environment(globals):
 
     '''Create Dockerfile'''
-    docker_prompt_template = prompt_constructor(PREFERENCES, 
-                                                GUIDELINES, 
-                                                WRITE_CODE, 
-                                                CREATE_DOCKER, 
-                                                SINGLEFILE)
+    docker_prompt_template = prompt_constructor(PREFERENCES, GUIDELINES, WRITE_CODE, CREATE_DOCKER, SINGLEFILE)
     
     prompt = docker_prompt_template.format(targetlang=globals.targetlang)
 
-    dockerfile_content = write_code(prompt,
-                                    target_path="Dockerfile",
-                                    waiting_message="Creating your environment...",
-                                    success_message=f"Created Docker environment for {globals.targetlang} project in directory '{globals.targetdir}'.",
-                                    globals=globals)
-
-    '''Create related files'''
-    dependencies_prompt_template = prompt_constructor(PREFERENCES,
-                                                        GUIDELINES,
-                                                        WRITE_CODE,
-                                                        CREATE_DEPENDENCIES,
-                                                        MULTIFILE)
-    prompt = dependencies_prompt_template.format(dockerfile=dockerfile_content)
-
+    write_code(prompt,
+                target_path="Dockerfile",
+                waiting_message="Creating your environment...",
+                success_message=f"Created Docker environment for {globals.targetlang} project in directory '{globals.targetdir}'.",
+                globals=globals)
 
 def create_io_spec(globals, spec="OpenAPI"):
     dir_structure = format_directory_structure(globals.sourcedir)
 
-    identify_endpoints_prompt_template = prompt_constructor(PREFERENCES,
-                                                            GUIDELINES,
-                                                            IDENTIFY_ENDPOINT_FILES,
-                                                            FILENAMES)
+    identify_endpoints_prompt_template = prompt_constructor(PREFERENCES, GUIDELINES, IDENTIFY_ENDPOINT_FILES, FILENAMES)
 
     prompt = identify_endpoints_prompt_template.format(dir_structure=dir_structure, sourcelang=globals.sourcelang)
 
     with yaspin(text="Analyzing directory structure...", spinner="dots") as spinner:
-        relevant_files = globals.ai.run_openai(prompt)
+        relevant_files = globals.ai.run(prompt)
         spinner.ok("✅ ")
 
     info_text = typer.style(f"Relevant files for API endpoints: {relevant_files}", fg=typer.colors.BLUE)
@@ -64,11 +48,7 @@ def create_io_spec(globals, spec="OpenAPI"):
     with open('memory/fileslist', 'w') as file:
         file.write('\n'.join(relevant_files_list))
 
-    spec_prompt_template = prompt_constructor(PREFERENCES,
-                                                GUIDELINES,
-                                                WRITE_CODE,
-                                                CREATE_SPEC,
-                                                SINGLEFILE)
+    spec_prompt_template = prompt_constructor(PREFERENCES, GUIDELINES, WRITE_CODE, CREATE_SPEC, SINGLEFILE)
 
     for file_name in relevant_files_list:
         file_path = os.path.join(globals.sourcedir, file_name)
@@ -79,7 +59,7 @@ def create_io_spec(globals, spec="OpenAPI"):
         print(prompt)
 
         with yaspin(text=f"Generating {spec} spec for {file_name}...", spinner="dots") as spinner:
-            _,_,openapi_spec = globals.ai.write_code_openai(prompt)[0]
+            _,_,openapi_spec = globals.ai.write_code(prompt)[0]
             spinner.ok("✅ ")
 
         output_filename = f"{spec}_{file_name}.yaml"
@@ -98,11 +78,7 @@ def create_target_APIs(globals):
     with open(globals.targetdir+'/Dockerfile', 'r') as file:
         dockerfile_content = file.read().strip()
 
-    create_endpoints_prompt_template = prompt_constructor(PREFERENCES,
-                                                            GUIDELINES,
-                                                            WRITE_CODE,
-                                                            CREATE_ENDPOINTS,
-                                                            MULTIFILE)
+    create_endpoints_prompt_template = prompt_constructor(PREFERENCES, GUIDELINES, WRITE_CODE, CREATE_ENDPOINTS, MULTIFILE)
 
     
     for file_name in relevant_files_list:
@@ -112,7 +88,7 @@ def create_target_APIs(globals):
 
         prompt = create_endpoints_prompt_template.format(targetlang=globals.targetlang,dockerfile_content=dockerfile_content,sourcefile_content=file_content)
         with yaspin(text=f"Generating APIs...", spinner="dots") as spinner:
-            code_completions = globals.ai.write_code_openai(prompt)
+            code_completions = globals.ai.write_code(prompt)
             
         print(code_completions)
 

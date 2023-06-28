@@ -19,11 +19,7 @@ def create_target_APIs(globals):
     with open(globals.targetdir+'/Dockerfile', 'r') as file:
         dockerfile_content = file.read().strip()
 
-    create_endpoints_prompt_template = prompt_constructor(PREFERENCES,
-                                                            GUIDELINES,
-                                                            WRITE_CODE,
-                                                            CREATE_ENDPOINTS,
-                                                            MULTIFILE)
+    create_endpoints_prompt_template = prompt_constructor(PREFERENCES, GUIDELINES, WRITE_CODE, CREATE_ENDPOINTS, MULTIFILE)
 
     
     for file_name in relevant_files_list:
@@ -33,7 +29,7 @@ def create_target_APIs(globals):
 
         prompt = create_endpoints_prompt_template.format(targetlang=globals.targetlang,dockerfile_content=dockerfile_content,sourcefile_content=file_content)
         with yaspin(text=f"Generating APIs...", spinner="dots") as spinner:
-            code_completions = globals.ai.write_code_openai(prompt)
+            code_completions = globals.ai.write_code(prompt)
             
         print(code_completions)
 

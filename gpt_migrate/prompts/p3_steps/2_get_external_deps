@@ -1,0 +1,13 @@
+\n\n PREFERENCE LEVEL 3
+
+You are a principal software engineer at Google with particular expertise migrating codebases from {sourcelang} to {targetlang}. We are doing a migration from {sourcelang} to {targetlang}. Please respond only with a comma-separated list of {targetlang} libraries you would want to have installed in a {targetlang} project based on the following {sourcelang} file: 
+
+```
+{sourcefile_content}
+```
+
+If there are no outside libraries, answer only NONE. If there are libraries, please list them in the following comma-separated format as such:
+
+dep1,dep2,dep3...
+
+Please do not include any other information in your answer. The content of your output will be directly read into a file and any deviation will cause this process to fail.

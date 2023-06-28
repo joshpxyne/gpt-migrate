@@ -1,0 +1,20 @@
+\n\n PREFERENCE LEVEL 3
+
+You are a principal software engineer at Google with particular expertise migrating codebases from {sourcelang} to {targetlang}. We are doing a migration from {sourcelang} to {targetlang}. Please respond only with a comma-separated list of any internal dependency files. For instance, if we were in python, `from db import mongo` would probably indicate there is an internal dependency file called db.py. Some may be external; ignore those. For instance, if we were in python, `import pandas` would be an external dependency and it should be ignored. We are currently in {sourcefile}.
+
+Directory structure:
+
+```
+{source_directory_structure}
+```
+
+{sourcefile}:
+```
+{sourcefile_content}
+```
+
+If there are no internal dependency files, answer only NONE. If there are internal dependency files, please list their paths relative to the root of this directory in the following comma-separated format as such:
+
+dep1.ext,folder1/dep2.ext,dep3.ext...
+
+Please do not include any other information in your answer. The content of your output will be directly read into a file and any deviation will cause this process to fail.

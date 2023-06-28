@@ -2,6 +2,7 @@ import os
 import typer
 from yaspin import yaspin
 from collections import Counter
+import fnmatch
 import re
 
 def detect_language(source_directory):
@@ -57,16 +58,6 @@ def detect_language(source_directory):
     
     return language
 
-def format_directory_structure(directory, indent=0):
-    structure = ""
-    if os.path.isdir(directory):
-        structure += "    " * indent + f"[Directory] {os.path.basename(directory)}\n"
-        for item in os.listdir(directory):
-            structure += format_directory_structure(os.path.join(directory, item), indent + 1)
-    else:
-        structure += "    " * indent + f"[File] {os.path.basename(directory)}\n"
-    return structure
-
 def prompt_constructor(*args):
     prompt = ""
     for arg in args:
@@ -74,20 +65,41 @@ def prompt_constructor(*args):
             prompt += file.read().strip()
     return prompt
 
-def write_code(prompt,target_path,waiting_message,success_message,globals):
+def llm_write_file(prompt,target_path,waiting_message,success_message,globals):
     
     file_content = ""
     with yaspin(text=waiting_message, spinner="dots") as spinner:
-        _,_,file_content = globals.ai.write_code_openai(prompt)[0]
+        file_name,language,file_content = globals.ai.write_code(prompt)[0]
         spinner.ok("✅ ")
 
-    with open(os.path.join(globals.targetdir, target_path), 'w') as file:
-        file.write(file_content)
+    if target_path:
+        with open(os.path.join(globals.targetdir, target_path), 'w') as file:
+            file.write(file_content)
+    else:
+        with open(os.path.join(globals.targetdir, file_name), 'w') as file:
+            file.write(file_content)
 
-    success_text = typer.style(success_message, fg=typer.colors.GREEN)
-    typer.echo(success_text)
+    if success_message:
+        success_text = typer.style(success_message, fg=typer.colors.GREEN)
+        typer.echo(success_text)
+    else:
+        success_text = typer.style(f"Created {file_name} at {globals.targetdir}", fg=typer.colors.GREEN)
+        typer.echo(success_text)
     
-    return file_content
+    return file_name, language, file_content
+
+def llm_run(prompt,waiting_message,success_message,globals):
+    
+    output = ""
+    with yaspin(text=waiting_message, spinner="dots") as spinner:
+        output = globals.ai.run(prompt)
+        spinner.ok("✅ ")
+
+    if success_message:
+        success_text = typer.style(success_message, fg=typer.colors.GREEN)
+        typer.echo(success_text)
+    
+    return output
 
 def load_templates_from_directory(directory_path):
     templates = {}
@@ -111,3 +123,50 @@ def parse_code_string(code_string):
             code_triples.append((section.split("\n```")[0], language.strip(), code.strip()))
     
     return code_triples
+
+def read_gitignore(path):
+    gitignore_path = os.path.join(path, '.gitignore')
+    patterns = []
+    if os.path.exists(gitignore_path):
+        with open(gitignore_path, 'r') as file:
+            for line in file:
+                line = line.strip()
+                if line and not line.startswith('#'):
+                    patterns.append(line)
+    return patterns
+
+def is_ignored(entry, gitignore_patterns):
+    for pattern in gitignore_patterns:
+        if fnmatch.fnmatch(entry, pattern):
+            return True
+    return False
+
+def build_directory_structure(path='.', indent='', is_last=True, parent_prefix='', is_root=True):
+    gitignore_patterns = read_gitignore(path) + [".gitignore"] if indent == '' else []
+
+    base_name = os.path.basename(path)
+
+    if not base_name:
+        base_name = '.'
+
+    if indent == '':
+        prefix = '|-- ' if not is_root else ''
+    elif is_last:
+        prefix = parent_prefix + '└── '
+    else:
+        prefix = parent_prefix + '├── '
+
+    if os.path.isdir(path):
+        result = indent + prefix + base_name + '/\n' if not is_root else ''
+    else:
+        result = indent + prefix + base_name + '\n'
+
+    if os.path.isdir(path):
+        entries = os.listdir(path)
+        for index, entry in enumerate(entries):
+            entry_path = os.path.join(path, entry)
+            new_parent_prefix = '    ' if is_last else '│   '
+            if not is_ignored(entry, gitignore_patterns):
+                result += build_directory_structure(entry_path, indent + '    ', index == len(entries) - 1, parent_prefix + new_parent_prefix, is_root=False)
+
+    return result
