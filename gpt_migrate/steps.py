@@ -2,18 +2,8 @@ import typer
 import os
 from yaspin import yaspin
 
-from utils import format_directory_structure
-
-PREFERENCES = "PREFERENCES"
-GUIDELINES = "p1_guidelines/guidelines"
-WRITE_CODE = "p2_actions/write_code"
-CREATE_DOCKER = "p3_steps/1_create_target_docker"
-IDENTIFY_ENDPOINT_FILES = "p3_steps/2a_identify_endpoint_files"
-CREATE_SPEC = "p3_steps/2b_create_spec"
-CREATE_ENDPOINTS = "p3_steps/3_create_endpoints"
-FILENAMES = "p4_output_formats/filenames"
-MULTIFILE = "p4_output_formats/multi_file"
-SINGLEFILE = "p4_output_formats/single_file"
+from utils import format_directory_structure, prompt_constructor, write_code
+from config import PREFERENCES, GUIDELINES, WRITE_CODE, CREATE_DOCKER, CREATE_DEPENDENCIES, IDENTIFY_ENDPOINT_FILES, CREATE_SPEC, CREATE_ENDPOINTS, MULTIFILE, SINGLEFILE, FILENAMES
 
 CONTEXT_WINDOWS = {
     "gpt-4-32k": 32000,
@@ -22,15 +12,9 @@ CONTEXT_WINDOWS = {
     "gpt-3.5-turbo": 4000,
 }
 
-def prompt_constructor(*args):
-    prompt = ""
-    for arg in args:
-        with open(os.path.abspath(f'prompts/{arg}'), 'r') as file:
-            prompt += file.read().strip()
-    return prompt
-
 def create_environment(globals):
 
+    '''Create Dockerfile'''
     docker_prompt_template = prompt_constructor(PREFERENCES, 
                                                 GUIDELINES, 
                                                 WRITE_CODE, 
@@ -39,14 +23,20 @@ def create_environment(globals):
     
     prompt = docker_prompt_template.format(targetlang=globals.targetlang)
 
-    with yaspin(text="Creating your environment...", spinner="dots") as spinner:
-        _, _, dockerfile_content = globals.ai.write_code(prompt)[0]
-        with open(os.path.join(globals.targetdir, "Dockerfile"), "w") as file:
-            file.write(dockerfile_content)
-        spinner.ok("✅ ")
+    dockerfile_content = write_code(prompt,
+                                    target_path="Dockerfile",
+                                    waiting_message="Creating your environment...",
+                                    success_message=f"Created Docker environment for {globals.targetlang} project in directory '{globals.targetdir}'.",
+                                    globals=globals)
 
-    success_text = typer.style(f"Created Docker environment for {globals.targetlang} project in directory '{globals.targetdir}'.", fg=typer.colors.GREEN, bold=True)
-    typer.echo(success_text)
+    '''Create related files'''
+    dependencies_prompt_template = prompt_constructor(PREFERENCES,
+                                                        GUIDELINES,
+                                                        WRITE_CODE,
+                                                        CREATE_DEPENDENCIES,
+                                                        MULTIFILE)
+    prompt = dependencies_prompt_template.format(dockerfile=dockerfile_content)
+
 
 def create_io_spec(globals, spec="OpenAPI"):
     dir_structure = format_directory_structure(globals.sourcedir)
@@ -59,7 +49,7 @@ def create_io_spec(globals, spec="OpenAPI"):
     prompt = identify_endpoints_prompt_template.format(dir_structure=dir_structure, sourcelang=globals.sourcelang)
 
     with yaspin(text="Analyzing directory structure...", spinner="dots") as spinner:
-        relevant_files = globals.ai.run(prompt)
+        relevant_files = globals.ai.run_openai(prompt)
         spinner.ok("✅ ")
 
     info_text = typer.style(f"Relevant files for API endpoints: {relevant_files}", fg=typer.colors.BLUE)
