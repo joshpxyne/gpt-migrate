@@ -1,6 +1,6 @@
 \n\n PREFERENCE LEVEL 3
 
-You're responsible for creating a set of tests for this piece of code. The tests should cover each main function - execute an input, check the output, repeat for each function. Assume this is exposed on port 8080 if applicable. Please write a set of tests that can be executed either as a python file or as a shell script that will validate or invalidate this file. Please ensure that the error messages for the test file are clear and descriptive. Use unittest.
+You're responsible for creating a set of tests for this piece of code. The tests should cover each main function - execute an input, check the output, repeat for each function. Assume this is exposed on port {targetport} if applicable. Please write a set of tests that can be executed either as a python file or as a shell script that will validate or invalidate this file. Please ensure that the error messages for the test file are clear and descriptive. Use unittest. Try to ensure that for whatever tests you write, the databases involved end up at their original state after running all of the tests. Create one test function per endpoint or testable function. Finally, in the logs, if the test fails, please have it log or print the response (instead of just asserting something). This will help us debug the issue.
 
 ```
 {old_file_content}

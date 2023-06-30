@@ -2,6 +2,6 @@
 
 Please respond only with a comma-separated list of items: 
 
-dep1,dep2,dep3...
+file.ext,dir1/file2.ext,file3.ext...
 
 Please do not include any other information in your answer. The content of your output will be directly read into a file and any deviation will cause this process to fail. If your list is empty, please instead write only NONE.

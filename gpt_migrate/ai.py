@@ -19,7 +19,7 @@ class AI:
             self.model_name = "gpt-3.5-turbo"
     
     def write_code(self, prompt):
-        message=[{"role": "user", "content": prompt}] 
+        message=[{"role": "user", "content": str(prompt)}] 
         response = openai.ChatCompletion.create(
             messages=message,
             stream=False,
@@ -34,7 +34,7 @@ class AI:
             return code_triples
 
     def run(self, prompt):
-        message=[{"role": "user", "content": prompt}] 
+        message=[{"role": "user", "content": str(prompt)}] 
         response = openai.ChatCompletion.create(
             messages=message,
             stream=True,

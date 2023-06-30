@@ -1,44 +1,64 @@
 from flask import Flask, request, jsonify
 from bcrypt import hashpw, gensalt
-from db import mongo
+from db import read_items, write_items
 
 app = Flask(__name__)
 
-grocery_items = [
-    {"id": 1, "name": "Milk", "price": 2.50},
-    {"id": 2, "name": "Eggs", "price": 3.00},
-    {"id": 3, "name": "Bread", "price": 1.50}
-]
+@app.route('/', methods=['GET'])
+def hello_world():
+    return "Hello World!"
 
 @app.route('/grocery_items', methods=['GET'])
 def get_grocery_items():
-    return jsonify(grocery_items)
+    try:
+        grocery_items = read_items()
+        items = [{"id": item["id"], "name": item["name"], "price": item["price"]} for item in grocery_items]
+        return jsonify(items)
+    except Exception as e:
+        return e, 500
 
 @app.route('/grocery_items', methods=['POST'])
 def add_grocery_item():
-    new_item = request.json
-    grocery_items.append(new_item)
-    return jsonify(new_item), 201
+    try:
+        new_item = request.json
+        print(new_item["id"],new_item,flush=True)
+        grocery_items = read_items()
+        if new_item not in grocery_items:
+            grocery_items.append(new_item)
+            write_items(grocery_items)
+        return "Successfully added item", 201
+    except Exception as e:
+        return e, 500
 
 @app.route('/grocery_items/<int:item_id>', methods=['PUT'])
 def update_grocery_item(item_id):
-    item = next((item for item in grocery_items if item["id"] == item_id), None)
-    if item:
-        item.update(request.json)
-        return jsonify(item)
-    return jsonify({"message": "Item not found"}), 404
-
+    try:
+        grocery_items = read_items()
+        for item in grocery_items:
+            if int(item["id"]) == int(item_id):
+                item.update(request.json)
+                write_items(grocery_items)
+                return "Successfully updated item", 201
+        return "Item not found", 404
+    except Exception as e:
+        return e, 500
+    
 @app.route('/grocery_items/<int:item_id>', methods=['DELETE'])
 def delete_grocery_item(item_id):
-    global grocery_items
-    grocery_items = [item for item in grocery_items if item["id"] != item_id]
-    return jsonify({"message": "Item deleted"}), 200
+    try:
+        grocery_items = read_items()
+        grocery_items = [item for item in grocery_items if item["id"] != item_id]
+        write_items(grocery_items)
+        return "Successfully deleted item", 200
+    except Exception as e:
+        return e, 500
 
-# function to intake a password, salt and hash it
-@app.route('/hashpassword/<str:password>', methods=['GET'])
+@app.route('/hashpassword/<string:password>', methods=['GET'])
 def hash_password(password):
-    mongo.write("passwords", {"password": hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')})
-    return hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')
+    try:
+        return hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')
+    except Exception as e:
+        return e, 500
 
 if __name__ == '__main__':
     app.run(debug=True)

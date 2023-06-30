@@ -8,6 +8,12 @@ Error message:
 {error_message}
 ```
 
+Docker logs:
+
+```
+{docker_logs}
+```
+
 Current {file_name}:
 
 ```

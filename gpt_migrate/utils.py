@@ -130,14 +130,14 @@ def read_gitignore(path):
                     patterns.append(line)
     return patterns
 
-def is_ignored(entry, gitignore_patterns):
+def is_ignored(entry_path, gitignore_patterns):
     for pattern in gitignore_patterns:
-        if fnmatch.fnmatch(entry, pattern):
+        if fnmatch.fnmatch(entry_path, pattern):
             return True
     return False
 
 def build_directory_structure(path='.', indent='', is_last=True, parent_prefix='', is_root=True):
-    gitignore_patterns = read_gitignore(path) + [".gitignore"] if indent == '' else []
+    gitignore_patterns = read_gitignore(path) + [".gitignore", "*gpt_migrate/*"] if indent == '' else ["*gpt_migrate/*"]
 
     base_name = os.path.basename(path)
 
@@ -161,7 +161,7 @@ def build_directory_structure(path='.', indent='', is_last=True, parent_prefix='
         for index, entry in enumerate(entries):
             entry_path = os.path.join(path, entry)
             new_parent_prefix = '    ' if is_last else '│   '
-            if not is_ignored(entry, gitignore_patterns):
+            if not is_ignored(entry_path, gitignore_patterns):
                 result += build_directory_structure(entry_path, indent + '    ', index == len(entries) - 1, parent_prefix + new_parent_prefix, is_root=False)
 
     return result
@@ -197,3 +197,10 @@ def read_from_memory(filename):
     with open('memory/'+filename, 'r') as file:
         content = file.read()
     return content
+
+def find_and_replace_file(filepath,find,replace):
+    with open(filepath, 'r') as file:
+        testfile_content = file.read()
+    testfile_content = testfile_content.replace(find,replace)
+    with open(filepath, 'w') as file:
+        file.write(testfile_content)

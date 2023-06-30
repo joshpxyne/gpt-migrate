@@ -95,7 +95,6 @@ def add_env_files(globals):
     ''' Refine Dockerfile '''
     
     refine_dockerfile_template = prompt_constructor(HIERARCHY, GUIDELINES, WRITE_CODE, REFINE_DOCKERFILE, SINGLEFILE)
-
     prompt = refine_dockerfile_template.format(dockerfile_content=dockerfile_content,
                                                 target_directory_structure=build_directory_structure(globals.targetdir),
                                                 external_deps_name=external_deps_name,

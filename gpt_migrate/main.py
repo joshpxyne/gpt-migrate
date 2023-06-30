@@ -7,13 +7,13 @@ from ai import AI
 
 from steps.setup import create_environment
 from steps.migrate import get_dependencies, write_migration, add_env_files
-from steps.test import run_dockerfile, create_tests, run_test
-from steps.debug import debug_error
+from steps.test import run_dockerfile, create_tests, validate_tests, run_test
+from steps.debug import debug_testfile, debug_error
 
 app = typer.Typer()
 
 class Globals:
-    def __init__(self, sourcedir, targetdir, sourcelang, targetlang, sourceentry, source_directory_structure, operating_system, testfiles, ai):
+    def __init__(self, sourcedir, targetdir, sourcelang, targetlang, sourceentry, source_directory_structure, operating_system, testfiles, sourceport, targetport, ai):
         self.sourcedir = sourcedir
         self.targetdir = targetdir
         self.sourcelang = sourcelang
@@ -22,6 +22,8 @@ class Globals:
         self.source_directory_structure = source_directory_structure
         self.operating_system=operating_system
         self.testfiles = testfiles
+        self.sourceport = sourceport
+        self.targetport = targetport
         self.ai = ai
         
 
@@ -35,7 +37,9 @@ def main(
         targetdir: str = typer.Option("../benchmarks/multi_endpoint/flask-nodejs/target", help="Directory where the migrated code will live."),
         targetlang: str = typer.Option("nodejs", help="Target language or framework for migration."),
         operating_system: str = typer.Option("linux", help="Operating system for the Dockerfile. Common options are 'linux' or 'windows'."),
-        testfiles: str = typer.Option("app.py", help="Comma-separated list of files that have functions to be tested. For instance, this could be an app.py or main.py file for Python app where your REST endpoints are."),
+        testfiles: str = typer.Option("app.py", help="Comma-separated list of files that have functions to be tested. For instance, this could be an app.py or main.py file for Python app where your REST endpoints are. Include the full relative path."),
+        sourceport: int = typer.Option(None, help="(Optional) port for testing the unit tests file against the original app."),
+        targetport: int = typer.Option(8080, help="Port for testing the unit tests file against the migrated app."),
         step: str = typer.Option("all", help="Step to run. Options are 'setup', 'migrate', 'test', 'all'.")
     ):
 
@@ -64,7 +68,7 @@ def main(
         sourceentry = typer.prompt("Unable to find the entrypoint file. Please enter it manually. This must be a file relative to the source directory.")
 
     source_directory_structure = build_directory_structure(sourcedir)
-    globals = Globals(sourcedir, targetdir, sourcelang, targetlang, sourceentry, source_directory_structure, operating_system, testfiles, ai)
+    globals = Globals(sourcedir, targetdir, sourcelang, targetlang, sourceentry, source_directory_structure, operating_system, testfiles, sourceport, targetport, ai)
 
     typer.echo(typer.style(f"\n • Reading {sourcelang} project from directory '{sourcedir}', with entrypoint '{sourceentry}'.", fg=typer.colors.BLUE))
     time.sleep(0.3)
@@ -75,12 +79,14 @@ def main(
 
     ''' 1. Setup '''
     if step in ['setup', 'all']:
+
+        # Set up environment (Docker)
         create_environment(globals)
 
     ''' 2. Migration '''
     if step in ['migrate', 'all']:
-        # recursively work through each of the files in the source directory, starting with the entrypoint.
         def migrate(sourcefile, globals):
+            # recursively work through each of the files in the source directory, starting with the entrypoint.
             internal_deps_list, external_deps_list = get_dependencies(sourcefile=sourcefile,globals=globals)
             for dependency in internal_deps_list:
                 migrate(dependency, globals)
@@ -91,27 +97,25 @@ def main(
 
     ''' 3. Testing '''
     if step in ['test', 'all']:
-        # Get docker environment up and running
         while True:
             result = run_dockerfile(globals)
-            if result=="success":
-                break
+            if result=="success": break
             debug_error(result,"",globals)
-
-        # Create tests
-        
-
-        # Run tests
         for testfile in globals.testfiles.split(','):
             generated_testfile = create_tests(testfile,globals)
+            if globals.sourceport:
+                while True:
+                    result = validate_tests(generated_testfile, globals)
+                    time.sleep(0.3)
+                    if result=="success": break
+                    debug_testfile(result,testfile,globals)
             while True:
                 result = run_test(generated_testfile, globals)
-                if result=="success":
-                    break
+                if result=="success": break
                 debug_error(result,globals.testfiles,globals)
                 run_dockerfile(globals)
     
-    typer.echo(typer.style("All tests complete and ready to rumble!", fg=typer.colors.GREEN))
+    typer.echo(typer.style("All tests complete. Ready to rumble. 💪", fg=typer.colors.GREEN))
 
 if __name__ == "__main__":
     app()

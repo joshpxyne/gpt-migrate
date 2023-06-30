@@ -9,6 +9,7 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 Global variables
 '''
 MAX_ERROR_MESSAGE_CHARACTERS = 5000
+MAX_DOCKER_LOG_CHARACTERS = 2000
 
 '''
 Prompt directory
@@ -29,9 +30,11 @@ MOVE_FILES = "p3_debug/move_files"
 CREATE_FILE = "p3_debug/create_file"
 IDENTIFY_FILE = "p3_debug/identify_file"
 DEBUG_FILE = "p3_debug/debug_file"
+DEBUG_TESTFILE = "p3_debug/debug_testfile"
 HUMAN_INTERVENTION = "p3_debug/human_intervention"
 MULTIFILE = "p4_output_formats/multi_file"
 SINGLEFILE = "p4_output_formats/single_file"
+FILENAMES = "p4_output_formats/filenames"
 
 '''
 Living list of types of files that should be excluded from being copied over
