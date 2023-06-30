@@ -1,0 +1,7 @@
+\n\n PREFERENCE LEVEL 3
+
+You're responsible for creating a set of tests for this piece of code. The tests should cover each main function - execute an input, check the output, repeat for each function. Assume this is exposed on port 8080 if applicable. Please write a set of tests that can be executed either as a python file or as a shell script that will validate or invalidate this file. Please ensure that the error messages for the test file are clear and descriptive. Use unittest.
+
+```
+{old_file_content}
+```

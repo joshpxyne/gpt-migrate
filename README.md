@@ -12,9 +12,9 @@ Usage:
 
 Install Docker and ensure that it's running. It's also recommended that you use at least GPT-4, preferably GPT-4-32k.
 
-`cd gpt_migrate && source venv/bin/activate`
-`pip install -r requirements.txt`
-`python main.py --targetlang nodejs`
+- `cd gpt_migrate && source venv/bin/activate`
+- `pip install -r requirements.txt`
+- `python main.py --targetlang nodejs`
 
 ## Help wanted
 We're looking for more core contributors. Whether you have a particular passion about a specific language or framework, want to us in creating a more robust test suite, or generally have interesting ideas on how to make this better, we'd love to have you!

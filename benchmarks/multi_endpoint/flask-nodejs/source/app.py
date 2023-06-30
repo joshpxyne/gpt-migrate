@@ -35,6 +35,7 @@ def delete_grocery_item(item_id):
     return jsonify({"message": "Item deleted"}), 200
 
 # function to intake a password, salt and hash it
+@app.route('/hashpassword/<str:password>', methods=['GET'])
 def hash_password(password):
     mongo.write("passwords", {"password": hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')})
     return hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')

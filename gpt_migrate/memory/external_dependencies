@@ -1,4 +1,4 @@
 express
-bcrypt
+bcryptjs
 mongodb
 mongodb

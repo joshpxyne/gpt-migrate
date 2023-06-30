@@ -4,7 +4,7 @@ import os
 import typer
 import subprocess
     
-def debug_error(error_message,globals):
+def debug_error(error_message,relevant_files,globals):
 
     identify_action_template = prompt_constructor(HIERARCHY, GUIDELINES, IDENTIFY_ACTION)
 
@@ -20,6 +20,9 @@ def debug_error(error_message,globals):
     
     if "MOVE_FILES" in action_list:
 
+        if not os.path.exists(os.path.join(globals.targetdir, 'gpt_migrate')):
+            os.makedirs(os.path.join(globals.targetdir, 'gpt_migrate')) 
+
         move_files_template = prompt_constructor(HIERARCHY, GUIDELINES, WRITE_CODE, MOVE_FILES, SINGLEFILE)
 
         prompt = move_files_template.format(error_message=error_message[-min(MAX_ERROR_MESSAGE_CHARACTERS, len(error_message)):],
@@ -28,15 +31,15 @@ def debug_error(error_message,globals):
                                               operating_system=globals.operating_system)
         
         file_name, language, shell_script_content = llm_write_file(prompt,
-                                                            target_path="GPT-Migrate.debug.sh",
+                                                            target_path="gpt_migrate/debug.sh",
                                                             waiting_message=f"Writing shell script...",
-                                                            success_message="Wrote GPT-Migrate.debug.sh based on error message.",
+                                                            success_message="Wrote debug.sh based on error message.",
                                                             globals=globals)
         
         # execute shell script from file_content using subprocess. Check with user using shell commands before executing.
-        if typer.confirm("GPT-Migrate wants to run this shell script to debug your application, which is also stored in GPT-Migrate.debug.sh: \n\n"+shell_script_content+"\n\nWould you like to run it?"):
+        if typer.confirm("GPT-Migrate wants to run this shell script to debug your application, which is also stored in gpt_migrate/debug.sh: \n\n"+shell_script_content+"\n\nWould you like to run it?"):
             try:
-                result = subprocess.run(["bash", "GPT-Migrate.debug.sh"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True, text=True)
+                result = subprocess.run(["bash", "gpt_migrate/debug.sh"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True, text=True)
                 print(result.stdout)
             except subprocess.CalledProcessError as e:
                 print("ERROR: ",e.output)
@@ -46,6 +49,16 @@ def debug_error(error_message,globals):
                 raise typer.Exit()
 
     if "EDIT_FILES" in action_list:
+        
+        if relevant_files != "":
+            fileslist = globals.testfiles.split(',')
+            files_to_construct = []
+            for file in fileslist:
+                with open(os.path.join(globals.sourcedir, file), 'r') as file:
+                    file_content = file.read()
+                files_to_construct.append(("migration_source/"+file, file_content))
+        
+            relevant_files = construct_relevant_files(files_to_construct)
 
         identify_file_template = prompt_constructor(HIERARCHY, GUIDELINES, IDENTIFY_FILE)
 
@@ -71,7 +84,10 @@ def debug_error(error_message,globals):
             
             prompt = debug_file_template.format(error_message=error_message[-min(MAX_ERROR_MESSAGE_CHARACTERS, len(error_message)):],
                                                 file_name=file_name,
-                                                old_file_content=old_file_content)
+                                                old_file_content=old_file_content,
+                                                targetlang=globals.targetlang,
+                                                sourcelang=globals.sourcelang,
+                                                relevant_files=relevant_files),
 
             _, language, file_content = llm_write_file(prompt,
                                                         target_path=file_name,
