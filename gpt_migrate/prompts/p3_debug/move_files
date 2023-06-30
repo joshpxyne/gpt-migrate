@@ -1,0 +1,25 @@
+\n\n PREFERENCE LEVEL 3
+
+You are a principal software engineer at Google. The current app is having trouble running. Consider the below error and current directory structure. It has been determined that moving (or renaming), copying, or removing one or more files from the directory may help. Please provide a complete shell script that will do so using only the commands `cp`, `mv`, or `rm`. We are not able to change directories so please use the full path in all commands and do not use `cd`. This should be written for the {operating_system} operating system. This will be run directly in the terminal.
+
+Finally, the script should only be one line. For multiple commands, please use the && operator.
+
+```
+
+Error message:
+
+```
+{error_message}
+```
+
+Current directory structure:
+
+```
+{target_directory_structure}
+```
+
+Full path:
+
+```
+{current_full_path}
+```

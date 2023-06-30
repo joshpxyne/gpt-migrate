@@ -5,20 +5,22 @@ import time as time
 
 from ai import AI
 
-from steps.environment import create_environment
+from steps.setup import create_environment
 from steps.migrate import get_dependencies, write_migration, add_env_files
-
+from steps.test import run_dockerfile
+from steps.debug import debug_error
 
 app = typer.Typer()
 
 class Globals:
-    def __init__(self, sourcedir, targetdir, sourcelang, targetlang, sourceentry, source_directory_structure, ai):
+    def __init__(self, sourcedir, targetdir, sourcelang, targetlang, sourceentry, source_directory_structure, operating_system, ai):
         self.sourcedir = sourcedir
         self.targetdir = targetdir
         self.sourcelang = sourcelang
         self.targetlang = targetlang
         self.sourceentry = sourceentry
         self.source_directory_structure = source_directory_structure
+        self.operating_system=operating_system
         self.ai = ai
         
 
@@ -31,6 +33,7 @@ def main(
         sourceentry: str = typer.Option("app.py", help="Entrypoint filename relative to the source directory. For instance, this could be an app.py or main.py file for Python."),
         targetdir: str = typer.Option("../benchmarks/multi_endpoint/flask-nodejs/target", help="Directory where the migrated code will live."),
         targetlang: str = typer.Option("nodejs", help="Target language or framework for migration."),
+        operating_system: str = typer.Option("linux", help="Operating system for the Dockerfile. Common options are 'linux' or 'windows'."),
         step: str = typer.Option("all", help="Step to run. Options are 'setup', 'migrate', 'test', 'all'.")
     ):
 
@@ -59,7 +62,7 @@ def main(
         sourceentry = typer.prompt("Unable to find the entrypoint file. Please enter it manually. This must be a file relative to the source directory.")
 
     source_directory_structure = build_directory_structure(sourcedir)
-    globals = Globals(sourcedir, targetdir, sourcelang, targetlang, sourceentry, source_directory_structure, ai)
+    globals = Globals(sourcedir, targetdir, sourcelang, targetlang, sourceentry, source_directory_structure, operating_system, ai)
 
     typer.echo(typer.style(f"\n • Reading {sourcelang} project from directory '{sourcedir}', with entrypoint '{sourceentry}'.", fg=typer.colors.BLUE))
     time.sleep(0.3)
@@ -86,7 +89,13 @@ def main(
 
     ''' 3. Testing '''
     if step in ['test', 'all']:
-        pass
+        while True:
+            result = run_dockerfile(globals)
+            if result=="success":
+                break
+            debug_error(result,globals)
+
+        
 
 
 if __name__ == "__main__":

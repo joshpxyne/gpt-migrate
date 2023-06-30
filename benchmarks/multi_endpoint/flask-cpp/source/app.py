@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify
+from bcrypt import hashpw, gensalt
+from db import mongo
 
 app = Flask(__name__)
 
@@ -31,6 +33,11 @@ def delete_grocery_item(item_id):
     global grocery_items
     grocery_items = [item for item in grocery_items if item["id"] != item_id]
     return jsonify({"message": "Item deleted"}), 200
+
+# function to intake a password, salt and hash it
+def hash_password(password):
+    mongo.write("passwords", {"password": hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')})
+    return hashpw(password.encode('utf-8'), gensalt()).decode('utf-8')
 
 if __name__ == '__main__':
     app.run(debug=True)

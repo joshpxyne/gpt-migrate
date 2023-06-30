@@ -1,0 +1,3 @@
+\n\n PREFERENCE LEVEL 3
+
+Please create a Dockerfile for a generic app in the following framework: {targetlang}. This new app is being transpiled to {targetlang} from {sourcelang}, where the entrypoint file name is {sourceentry}. Please use the same file name besides the extension if in a different language, unless {targetlang} requires a certain naming convention for the entrypoint file, such as main.ext etc. Be sure to include a dependencies installation step with your choice of file name. No need to write any comments. Exposed port should be 8080.

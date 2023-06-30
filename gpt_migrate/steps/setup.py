@@ -4,7 +4,7 @@ from config import HIERARCHY, GUIDELINES, WRITE_CODE, CREATE_DOCKER, SINGLEFILE
 def create_environment(globals):
 
     ''' Create Dockerfile '''
-    
+
     docker_prompt_template = prompt_constructor(HIERARCHY, GUIDELINES, WRITE_CODE, CREATE_DOCKER, SINGLEFILE)
     
     prompt = docker_prompt_template.format(targetlang=globals.targetlang, 
@@ -17,5 +17,5 @@ def create_environment(globals):
                     success_message=f"Created Docker environment for {globals.targetlang} project in directory '{globals.targetdir}'.",
                     globals=globals)
     
-    with open('memory/dependencies', 'w') as file:
+    with open('memory/external_dependencies', 'w') as file:
         file.write('')

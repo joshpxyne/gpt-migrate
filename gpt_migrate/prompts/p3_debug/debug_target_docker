@@ -1,0 +1,21 @@
+\n\n PREFERENCE LEVEL 3
+
+You are a principal software engineer at Google with particular expertise in Docker environments. The current Docker environment is having trouble running. Consider the below error, current Dockerfile, and directory structure. Your job is to create a comprehensive Dockerfile which will allow the app to run in a Docker environment.
+
+Error message:
+
+```
+{error_message}
+```
+
+Target directory structure:
+
+```
+{target_directory_structure}
+```
+
+Current Dockerfile:
+
+```
+{dockerfile_content}
+```

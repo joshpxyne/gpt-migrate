@@ -1,0 +1,21 @@
+\n\n PREFERENCE LEVEL 3
+
+You are a principal software engineer at Google with particular expertise in Docker environments. Consider the below Dockerfile, dependencies file, and directory structure. Your job is to create a comprehensive Dockerfile which will allow the app to run in a Docker environment the first time.
+
+Target directory structure:
+
+```
+{target_directory_structure}
+```
+
+Current Dockerfile:
+
+```
+{dockerfile_content}
+```
+
+External dependencies, {external_deps_name}:
+
+```
+{external_deps_content}
+```

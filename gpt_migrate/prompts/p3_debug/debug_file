@@ -1,0 +1,15 @@
+\n\n PREFERENCE LEVEL 3
+
+You are a principal software engineer at Google. The current Docker app is having trouble running. Consider the below error and the current version of {file_name}, which is at least partially responsible for this bug. Please rewrite this file to fix the bug.
+
+Error message:
+
+```
+{error_message}
+```
+
+Current {file_name}:
+
+```
+{old_file_content}
+```

@@ -1,0 +1,21 @@
+\n\n PREFERENCE LEVEL 3
+
+You are a principal software engineer at Google with particular expertise in Docker environments. Consider the below Dockerfile and create a file for external dependencies. Some languages require a specific directory and/or file name, and to address this in the file for external dependencies. The current directory structure is as follows:
+
+```
+{target_directory_structure}
+```
+
+If this will be an issue for {targetlang}, please handle for this in the external dependencies file.
+
+Dockerfile:
+
+```
+{dockerfile_content}
+```
+
+External dependencies:
+
+```
+{external_deps}
+```

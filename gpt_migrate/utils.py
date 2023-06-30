@@ -5,6 +5,7 @@ from collections import Counter
 import fnmatch
 import re
 import shutil
+from config import INCLUDED_EXTENSIONS, EXTENSION_TO_LANGUAGE
 
 def detect_language(source_directory):
 
@@ -18,44 +19,8 @@ def detect_language(source_directory):
     extension_counts = Counter(file_extensions)
     most_common_extension, _ = extension_counts.most_common(1)[0]
     
-    extension_to_language = {
-        'py': 'Python',
-        'js': 'JavaScript',
-        'java': 'Java',
-        'rb': 'Ruby',
-        'php': 'PHP',
-        'cs': 'C#',
-        'go': 'Go',
-        'rs': 'Rust',
-        'cpp': 'C++',
-        'cc': 'C++',
-        'cxx': 'C++',
-        'c': 'C',
-        'swift': 'Swift',
-        'm': 'Objective-C',
-        'kt': 'Kotlin',
-        'scala': 'Scala',
-        'pl': 'Perl',
-        'pm': 'Perl',
-        'r': 'R',
-        'lua': 'Lua',
-        'groovy': 'Groovy',
-        'ts': 'TypeScript',
-        'tsx': 'TypeScript',
-        'jsx': 'JavaScript',
-        'dart': 'Dart',
-        'elm': 'Elm',
-        'erl': 'Erlang',
-        'ex': 'Elixir',
-        'fs': 'F#',
-        'hs': 'Haskell',
-        'jl': 'Julia',
-        'nim': 'Nim',
-        'php': 'PHP',
-}
-    
     # Determine the language based on the most common file extension
-    language = extension_to_language.get(most_common_extension)
+    language = EXTENSION_TO_LANGUAGE.get(most_common_extension, None)
     
     return language
 
@@ -85,6 +50,9 @@ def llm_write_file(prompt,target_path,waiting_message,success_message,globals):
     with yaspin(text=waiting_message, spinner="dots") as spinner:
         file_name,language,file_content = globals.ai.write_code(prompt)[0]
         spinner.ok("✅ ")
+    
+    if file_name=="INSTRUCTIONS:":
+        return "INSTRUCTIONS:","",file_content
 
     if target_path:
         with open(os.path.join(globals.targetdir, target_path), 'w') as file:
@@ -202,10 +170,30 @@ def copy_files(sourcedir, targetdir, excluded_files=[]):
     gitignore_patterns = read_gitignore(sourcedir) + [".gitignore"]
     for item in os.listdir(sourcedir):
         if os.path.isfile(os.path.join(sourcedir, item)):
-            if item.endswith(('.env', '.txt', '.json', '.yml', '.yaml')) and item not in excluded_files:
+            if item.endswith(INCLUDED_EXTENSIONS) and item not in excluded_files:
                 if not is_ignored(item, gitignore_patterns):
                     os.makedirs(targetdir, exist_ok=True)
                     shutil.copy(os.path.join(sourcedir, item), targetdir)
                     typer.echo(typer.style(f"Copied {item} from {sourcedir} to {targetdir}", fg=typer.colors.GREEN))
         else:
             copy_files(os.path.join(sourcedir, item), os.path.join(targetdir, item))
+
+def construct_relevant_files(files):
+    ret = ""
+    for file in files:
+        name = file[0]
+        content = file[1]
+        ret += name+":\n\n" + "```\n"+content+"\n```\n\n"
+    return ret
+            
+def write_to_memory(filename,content):
+    with open('memory/'+filename, 'a+') as file:
+        for item in content:
+            if item not in file.read().split("\n"):
+                file.write(item+'\n')
+
+def read_from_memory(filename):
+    content = ""
+    with open('memory/'+filename, 'r') as file:
+        content = file.read()
+    return content

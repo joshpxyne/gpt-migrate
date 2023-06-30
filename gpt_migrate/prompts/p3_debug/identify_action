@@ -1,0 +1,23 @@
+\n\n PREFERENCE LEVEL 3
+
+You are a principal software engineer at Google pair programming with a partner. The current Docker app is having trouble running. Consider the below error and the directory structure. Your job is to identify which action to take from the following: MOVE_FILES, CREATE_FILES, EDIT_FILES. Your output must be a comma-separated list of one or more of the options, for example: MOVE_FILES,EDIT_FILES. 
+
+If copying, moving, or deleting a file or directory will help, output "MOVE_FILES". 
+
+If creating one or more new files will help you resolve the issue, output "CREATE_FILES".
+
+If editing one or more existing files can help resolve the issue, output "EDIT_FILES". 
+
+It's highly important that your output is a comma-separated list of MOVE_FILES, CREATE_FILES, and/or EDIT_FILES. Nothing else.
+
+Error message:
+
+```
+{error_message}
+```
+
+Directory structure:
+
+```
+{target_directory_structure}
+```

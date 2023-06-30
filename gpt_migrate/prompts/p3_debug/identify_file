@@ -1,0 +1,17 @@
+\n\n PREFERENCE LEVEL 3
+
+You are a principal software engineer at Google. The current Docker app is having trouble running. Consider the below error and the directory structure. Your job is to identify which file is responsible for this error. If multiple files, please list them in comma-separated values and include the whole relative path, for example: file1.ext,directory1/file2.ext,file3.ext...
+
+Error message:
+
+```
+{error_message}
+```
+
+Directory structure:
+
+```
+{target_directory_structure}
+```
+
+The output format should be either a single filename or a comma-separated list of filenames, and nothing else. If there are none that are obvious, please write only "NONE FOUND" and nothing else.

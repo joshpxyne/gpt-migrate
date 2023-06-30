@@ -1,0 +1,14 @@
+\n\n PREFERENCE LEVEL 4
+
+We will be using the output you provide as-is to create new files OR provide natural language instructions for how to debug the problem. 
+
+If your output is a new file, please be precise and do not include any other text. Your output needs to be ONE file; if your output contains multiple files, it will break the system. Your output should consist ONLY of the file name, language, and code, in the following format:
+
+file_name.ext
+```language
+CODE
+```
+
+If you decide that the problem cannot be fixed by simply changing a file, please provide natural language instructions for how to debug the problem. The format should be "INSTRUCTIONS: " followed by the text. For example:
+
+INSTRUCTIONS: You need to change the file name from "file_name.ext" to "new_file_name.ext" and then run the following command: "python3 file_name.ext".

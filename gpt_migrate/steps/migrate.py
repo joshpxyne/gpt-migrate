@@ -1,5 +1,5 @@
-from utils import prompt_constructor, llm_write_file, llm_write_files, llm_run, build_directory_structure, copy_files
-from config import HIERARCHY, GUIDELINES, WRITE_CODE, GET_EXTERNAL_DEPS, GET_INTERNAL_DEPS, ADD_DOCKER_REQUIREMENTS, WRITE_MIGRATION, SINGLEFILE, MULTIFILE
+from utils import prompt_constructor, llm_write_file, llm_run, build_directory_structure, copy_files, write_to_memory, read_from_memory
+from config import HIERARCHY, GUIDELINES, WRITE_CODE, GET_EXTERNAL_DEPS, GET_INTERNAL_DEPS, ADD_DOCKER_REQUIREMENTS, REFINE_DOCKERFILE, WRITE_MIGRATION, SINGLEFILE, EXCLUDED_FILES
 import os
 
 
@@ -23,13 +23,8 @@ def get_dependencies(sourcefile,globals):
                             success_message=None,
                             globals=globals)
     
-    external_deps_list = []
-    if external_dependencies!="NONE":
-        external_deps_list = external_dependencies.split(',')
-    with open('memory/external_dependencies', 'a+') as file:
-        for dependency in external_deps_list:
-            if dependency not in file.read():
-                file.write(dependency+'\n')
+    external_deps_list = external_dependencies.split(',') if external_dependencies != "NONE" else []
+    write_to_memory("external_dependencies",external_deps_list)
 
     prompt = internal_deps_prompt_template.format(targetlang=globals.targetlang,
                                                     sourcelang=globals.sourcelang,
@@ -42,9 +37,7 @@ def get_dependencies(sourcefile,globals):
                             success_message=None,
                             globals=globals)
     
-    internal_deps_list = []
-    if internal_dependencies!="NONE":
-        internal_deps_list = internal_dependencies.split(',')
+    internal_deps_list = internal_dependencies.split(',') if internal_dependencies != "NONE" else []
     
     return internal_deps_list, external_deps_list
                     
@@ -74,9 +67,9 @@ def write_migration(sourcefile, external_deps_list, globals):
     
 def add_env_files(globals):
 
-    ''' Copy all files recursively with the extensions .env, .txt, .json, .yml, .yaml, or no extension from the source directory to the target directory in the same relative structure '''
+    ''' Copy all files recursively with included extensions from the source directory to the target directory in the same relative structure '''
 
-    copy_files(globals.sourcedir, globals.targetdir, excluded_files=['requirements.txt', 'Dockerfile', 'package.json', 'package-lock.json', 'yarn.lock', 'node_modules/'])
+    copy_files(globals.sourcedir, globals.targetdir, excluded_files=EXCLUDED_FILES)
 
     ''' Add files required from the Dockerfile '''
 
@@ -86,17 +79,30 @@ def add_env_files(globals):
     with open(os.path.join(globals.targetdir, 'Dockerfile'), 'r') as file:
         dockerfile_content = file.read()
     
-    external_deps = ""
-    with open('memory/external_dependencies', 'r') as file:
-        external_deps = file.read()
+    external_deps = read_from_memory("external_dependencies")
 
     prompt = add_docker_requirements_template.format(dockerfile_content=dockerfile_content,
-                                                        external_deps=external_deps)
+                                                        external_deps=external_deps,
+                                                        target_directory_structure=build_directory_structure(globals.targetdir),
+                                                        targetlang=globals.targetlang)
 
-    llm_write_file(prompt,
+    external_deps_name, _, external_deps_content = llm_write_file(prompt,
                     target_path=None,
                     waiting_message=f"Creating dependencies file required for the Docker environment...",
                     success_message=None,
                     globals=globals)
     
+    ''' Refine Dockerfile '''
     
+    refine_dockerfile_template = prompt_constructor(HIERARCHY, GUIDELINES, WRITE_CODE, REFINE_DOCKERFILE, SINGLEFILE)
+
+    prompt = refine_dockerfile_template.format(dockerfile_content=dockerfile_content,
+                                                target_directory_structure=build_directory_structure(globals.targetdir),
+                                                external_deps_name=external_deps_name,
+                                                external_deps_content=external_deps_content)
+
+    llm_write_file(prompt,
+                    target_path="Dockerfile",
+                    waiting_message=f"Re-writing Dockerfile based on dependencies required for the Docker environment...",
+                    success_message="Re-wrote Dockerfile with dependencies required for the Docker environment.",
+                    globals=globals)

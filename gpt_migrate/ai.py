@@ -27,8 +27,11 @@ class AI:
             max_tokens=self.max_tokens,
             temperature=self.temperature
         )
-        code_triples = parse_code_string(response["choices"][0]["message"]["content"])
-        return code_triples
+        if response["choices"][0]["message"]["content"].startswith("INSTRUCTIONS:"):
+            return ("INSTRUCTIONS:","",response["choices"][0]["message"]["content"][14:])
+        else:
+            code_triples = parse_code_string(response["choices"][0]["message"]["content"])
+            return code_triples
 
     def run(self, prompt):
         message=[{"role": "user", "content": prompt}] 
@@ -43,7 +46,6 @@ class AI:
         for chunk in response:
             delta = chunk["choices"][0]["delta"]
             msg = delta.get("content", "")
-            print(msg, end="")
             chat += msg
         return chat
     
