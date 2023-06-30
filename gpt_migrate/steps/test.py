@@ -60,8 +60,8 @@ def validate_tests(testfile,globals):
             # find all instances of globals.targetport in the testfile and replace with the port number globals.sourceport
             find_and_replace_file(os.path.join(globals.targetdir, f"gpt_migrate/{testfile}"), str(globals.targetport), str(globals.sourceport))
             result = subprocess.run(["python3", os.path.join(globals.targetdir,f"gpt_migrate/{testfile}")], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True, text=True, timeout=15)
-            print(result.stdout)
             spinner.ok("✅ ")
+        print(result.stdout)
         find_and_replace_file(os.path.join(globals.targetdir, f"gpt_migrate/{testfile}"), str(globals.sourceport), str(globals.targetport))
         typer.echo(typer.style(f"Tests validated successfully on your source app.", fg=typer.colors.GREEN))
         return "success"
@@ -86,6 +86,8 @@ def run_test(testfile,globals):
         with yaspin(text="Running tests...", spinner="dots") as spinner:
             result = subprocess.run(["python3", os.path.join(globals.targetdir,f"gpt_migrate/{testfile}")], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True, text=True, timeout=15)
             spinner.ok("✅ ")
+
+        print(result.stdout)
         success_text = typer.style(f"Tests passed for {testfile}!", fg=typer.colors.GREEN)
         typer.echo(success_text)
         return "success"

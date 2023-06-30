@@ -29,19 +29,6 @@ def add_grocery_item():
         return "Successfully added item", 201
     except Exception as e:
         return e, 500
-
-@app.route('/grocery_items/<int:item_id>', methods=['PUT'])
-def update_grocery_item(item_id):
-    try:
-        grocery_items = read_items()
-        for item in grocery_items:
-            if int(item["id"]) == int(item_id):
-                item.update(request.json)
-                write_items(grocery_items)
-                return "Successfully updated item", 201
-        return "Item not found", 404
-    except Exception as e:
-        return e, 500
     
 @app.route('/grocery_items/<int:item_id>', methods=['DELETE'])
 def delete_grocery_item(item_id):

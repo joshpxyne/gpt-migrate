@@ -31,10 +31,10 @@ class Globals:
 def main(
         model: str = typer.Option("gpt-4-32k", help="Large Language Model to be used."),
         temperature: float = typer.Option(0, help="Temperature setting for the AI model."),
-        sourcedir: str = typer.Option("../benchmarks/multi_endpoint/flask-nodejs/source", help="Source directory containing the code to be migrated."),
+        sourcedir: str = typer.Option("../benchmarks/flask-nodejs/source", help="Source directory containing the code to be migrated."),
         sourcelang: str = typer.Option(None, help="Source language or framework of the code to be migrated."),
         sourceentry: str = typer.Option("app.py", help="Entrypoint filename relative to the source directory. For instance, this could be an app.py or main.py file for Python."),
-        targetdir: str = typer.Option("../benchmarks/multi_endpoint/flask-nodejs/target", help="Directory where the migrated code will live."),
+        targetdir: str = typer.Option("../benchmarks/flask-nodejs/target", help="Directory where the migrated code will live."),
         targetlang: str = typer.Option("nodejs", help="Target language or framework for migration."),
         operating_system: str = typer.Option("linux", help="Operating system for the Dockerfile. Common options are 'linux' or 'windows'."),
         testfiles: str = typer.Option("app.py", help="Comma-separated list of files that have functions to be tested. For instance, this could be an app.py or main.py file for Python app where your REST endpoints are. Include the full relative path."),
@@ -70,11 +70,11 @@ def main(
     source_directory_structure = build_directory_structure(sourcedir)
     globals = Globals(sourcedir, targetdir, sourcelang, targetlang, sourceentry, source_directory_structure, operating_system, testfiles, sourceport, targetport, ai)
 
-    typer.echo(typer.style(f"\n • Reading {sourcelang} project from directory '{sourcedir}', with entrypoint '{sourceentry}'.", fg=typer.colors.BLUE))
+    typer.echo(typer.style(f"◐ Reading {sourcelang} project from directory '{sourcedir}', with entrypoint '{sourceentry}'.", fg=typer.colors.BLUE))
     time.sleep(0.3)
-    typer.echo(typer.style(f"\n • Outputting {targetlang} project to directory '{targetdir}'.", fg=typer.colors.BLUE))
+    typer.echo(typer.style(f"◑ Outputting {targetlang} project to directory '{targetdir}'.", fg=typer.colors.BLUE))
     time.sleep(0.3)
-    typer.echo(typer.style("\n • Source directory structure: \n\n" + source_directory_structure, fg=typer.colors.BLUE))
+    typer.echo(typer.style("Source directory structure: \n\n" + source_directory_structure, fg=typer.colors.BLUE))
 
 
     ''' 1. Setup '''

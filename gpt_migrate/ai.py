@@ -1,4 +1,4 @@
-from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from config import OPENAI_API_KEY
 import os
 import openai
@@ -12,10 +12,9 @@ class AI:
         self.max_tokens = max_tokens
         self.model_name = model
         try:
-            self.model = OpenAI(model_name=model, temperature=temperature, openai_api_key=OPENAI_API_KEY)
+            _ = ChatOpenAI(model_name=model) # check to see if model is available to user
         except Exception as e:
             print(e)
-            self.model = OpenAI(model_name="gpt-3.5-turbo", temperature=temperature, openai_api_key=OPENAI_API_KEY)
             self.model_name = "gpt-3.5-turbo"
     
     def write_code(self, prompt):
