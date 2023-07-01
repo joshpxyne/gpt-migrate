@@ -18,5 +18,15 @@ Install Docker and ensure that it's running. It's also recommended that you use 
 
 `python main.py --targetlang nodejs`
 
+
+### 📺 Demos
+
+#### Migrating from Python to Node.js
+https://user-images.githubusercontent.com/25165841/250232917-bcc99ce8-99b7-4e3d-a653-f89e163ed825.mp4
+
+#### GPT-assisted debugging
+https://user-images.githubusercontent.com/25165841/250233075-eff1a535-f40e-42e4-914c-042c69ba9195.mp4
+
+
 ## Help wanted
 We're looking for more core contributors. Whether you have a particular passion about a specific language or framework, want to us in creating a more robust test suite, or generally have interesting ideas on how to make this better, we'd love to have you!
