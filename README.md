@@ -4,7 +4,6 @@
 
 If you've ever faced the pain of migrating a codebase to a new framework or language, this project is for you. 
 
-#### Migrating from Python to Node.js
 https://user-images.githubusercontent.com/25165841/250232917-bcc99ce8-99b7-4e3d-a653-f89e163ed825.mp4
 
 Migration is a costly, tedious, and non-trivial problem. Do not trust the current version blindly and please use responsibly. Please also be aware that costs can add up quickly as GPT-Migrate is designed to write (and potentially re-write) the entirety of a codebase.
@@ -60,7 +59,7 @@ You can customize the behavior of GPT-Migrate by passing the following options t
 For example, to migrate a Python codebase to Node.js, you might run:
 
 ```bash
-python main.py --sourcedir ~/path/to/my-python-app --sourceentry app.py --targetdir ~/path/to/my-nodejs-app --targetlang nodejs
+python main.py --sourcedir /path/to/my-python-app --sourceentry app.py --targetdir /path/to/my-nodejs-app --targetlang nodejs
 ```
 
 This will take the Python code in `./my-python-app`, migrate it to Node.js, and write the resulting code to `./my-nodejs-app`.
