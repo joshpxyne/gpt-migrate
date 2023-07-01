@@ -1,4 +1,3 @@
-Vapor
-Fluent
-SwiftKuery
-SwiftCrypto
+express
+bcrypt
+node-json-db
