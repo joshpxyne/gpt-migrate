@@ -4,6 +4,9 @@
 
 If you've ever faced the pain of migrating a codebase to a new framework or language, this project is for you. 
 
+#### Migrating from Python to Node.js
+https://user-images.githubusercontent.com/25165841/250232917-bcc99ce8-99b7-4e3d-a653-f89e163ed825.mp4
+
 Migration is a costly, tedious, and non-trivial problem. Do not trust the current version blindly and please use responsibly. Please also be aware that costs can add up quickly as GPT-Migrate is designed to write (and potentially re-write) the entirety of a codebase.
 
 However, with the collective brilliance of the OSS community and the current state of LLMs, it is also a very tractable problem.
@@ -57,15 +60,10 @@ You can customize the behavior of GPT-Migrate by passing the following options t
 For example, to migrate a Python codebase to Node.js, you might run:
 
 ```bash
-python main.py --sourcedir ./my-python-app --sourcelang python --sourceentry app.py --targetdir ./my-nodejs-app --targetlang nodejs
+python main.py --sourcedir ~/path/to/my-python-app --sourceentry app.py --targetdir ~/path/to/my-nodejs-app --targetlang nodejs
 ```
 
 This will take the Python code in `./my-python-app`, migrate it to Node.js, and write the resulting code to `./my-nodejs-app`.
-
-### 📺 Demos
-
-#### Migrating from Python to Node.js
-https://user-images.githubusercontent.com/25165841/250232917-bcc99ce8-99b7-4e3d-a653-f89e163ed825.mp4
 
 #### GPT-assisted debugging
 https://user-images.githubusercontent.com/25165841/250233075-eff1a535-f40e-42e4-914c-042c69ba9195.mp4
@@ -74,13 +72,13 @@ https://user-images.githubusercontent.com/25165841/250233075-eff1a535-f40e-42e4-
 
 For migrating a repo from `--sourcelang` to `--targetlang`...
 
-1. GPT-Migrate first creates a Docker environment for `--targetlang`
-2. It evaluates your existing code recursively to identify 3rd-party `--sourcelang` dependencies and selects corresponding `--targetlang` dependencies
-3. It recursively rebuilds new `--targetlang` code from your existing code starting from your designated `--sourceentry` file
-4. It spins up the Docker environment with the new codebase, exposing it on `--targetport` and iteratively debugging as needed
-5. It develops unit tests using Python's unittest framework, and optionally tests these against your existing app if it's running and exposed on `--sourceport`, iteratively debugging as needed
-6. It tests the new code on `--targetport` against these unit tests
-7. It iteratively debugs the code for for you with context from logs, error messages, relevant files, and directory structure. It does so by choosing one or more actions (move, create, or edit files) then executing them.
+1. GPT-Migrate first creates a Docker environment for `--targetlang`, which is either passed in or assessed automatically by GPT-Migrate.
+2. It evaluates your existing code recursively to identify 3rd-party `--sourcelang` dependencies and selects corresponding `--targetlang` dependencies.
+3. It recursively rebuilds new `--targetlang` code from your existing code starting from your designated `--sourceentry` file. This step can be started from with the `--step migrate` option.
+4. It spins up the Docker environment with the new codebase, exposing it on `--targetport` and iteratively debugging as needed.
+5. It develops unit tests using Python's unittest framework, and optionally tests these against your existing app if it's running and exposed on `--sourceport`, iteratively debugging as needed. This step can be started from with the `--step test` option.
+6. It tests the new code on `--targetport` against these unit tests.
+7. It iteratively debugs the code for for you with context from logs, error messages, relevant files, and directory structure. It does so by choosing one or more actions (move, create, or edit files) then executing them. If it wants to execute any sort of shell script (moving files around), it will first ask for clearance. Finally, if at any point it gets stuck or the user ends the debugging loop, it will output directions for the user to follow to move to the next step of the migration.
 8. The new codebase is completed and exists in `--targetdir`.
 
 ### Prompt Design
