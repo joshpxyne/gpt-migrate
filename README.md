@@ -103,5 +103,3 @@ We're actively looking to build up a robust benchmark repository. If you have a 
 ## 📣 Call to Action
 
 We're looking for talented co-contributors. Whether you have a particular passion about a specific language or framework, want to help in creating a more robust test suite, or generally have interesting ideas on how to make this better, we'd love to have you!
-
-◐ ◑ ◒ ◓ ◔ ◕ ◖ ◗ ◘ ◙ ◚ ◛ ◜ ◝ ◞ ◟ ◠ ◡ ◢ ◣ ◤ ◥ ◧ ◨ ◩ ◪ ◭ ◮ ◰ ◱ ◲ ◳ ◴ ◵ ◶ ◷ ◸ ◹ ◺ ◿
