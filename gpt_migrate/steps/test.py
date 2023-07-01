@@ -80,6 +80,8 @@ def validate_tests(testfile,globals):
                 tests_content = file.read()
             require_human_intervention(error_message,relevant_files=construct_relevant_files([(f"gpt_migrate/{testfile}", tests_content)]),globals=globals)
             raise typer.Exit()
+    except subprocess.TimeoutExpired as e:
+        return f"gpt_migrate/{testfile} timed out due to an unknown error and requires fixing."
 
 def run_test(testfile,globals):
     try:
@@ -106,6 +108,8 @@ def run_test(testfile,globals):
             require_human_intervention(error_message,relevant_files=construct_relevant_files([(f"gpt_migrate/{testfile}", tests_content)]),globals=globals)
             raise typer.Exit()
 
+    except subprocess.TimeoutExpired as e:
+        return f"gpt_migrate/{testfile} timed out due to an unknown error and requires fixing."
 
 
         

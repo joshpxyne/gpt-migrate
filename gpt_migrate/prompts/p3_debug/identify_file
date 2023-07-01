@@ -2,7 +2,7 @@
 
 You are a principal software engineer at Google. The current Docker app is having trouble running. Consider the below error and the directory structure. Your job is to identify which file is responsible for this error. If multiple files, please list them in comma-separated values and include the whole relative path, for example: file1.ext,directory1/file2.ext,file3.ext...
 
-Note that the test files, anything in the gpt_migrate directory, are rarely wrong. Usually if the error is from one of these, you'll need to fix the correspondingly named file in the main directory.
+Do not select any files in the gpt_migrate directory. If the error is from one of these, you'll need to fix the correspondingly named file in the main directory.
 
 Error message:
 

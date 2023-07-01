@@ -102,6 +102,6 @@ def add_env_files(globals):
 
     llm_write_file(prompt,
                     target_path="Dockerfile",
-                    waiting_message=f"Re-writing Dockerfile based on dependencies required for the Docker environment...",
-                    success_message="Re-wrote Dockerfile with dependencies required for the Docker environment.",
+                    waiting_message=f"Refining Dockerfile based on dependencies required for the Docker environment...",
+                    success_message="Refined Dockerfile with dependencies required for the Docker environment.",
                     globals=globals)

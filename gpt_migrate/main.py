@@ -114,6 +114,7 @@ def main(
                 if result=="success": break
                 debug_error(result,globals.testfiles,globals)
                 run_dockerfile(globals)
+                time.sleep(1) # wait for docker to spin up
     
     typer.echo(typer.style("All tests complete. Ready to rumble. 💪", fg=typer.colors.GREEN))
 
