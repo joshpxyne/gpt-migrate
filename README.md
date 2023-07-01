@@ -84,7 +84,7 @@ For migrating a repo from `--sourcelang` to `--targetlang`...
 
 Prompts are organized in the following fashion:
 
-- `HIERARCHY`: this defines the notion of preferences. There are 3 levels of preference, and each level is more important than the previous one.
+- `HIERARCHY`: this defines the notion of preferences. There are 4 levels of preference, and each level prioritized more highly than the previous one.
 - `p1`: Preference Level 1. These are the most general prompts, and consist of broad guidelines.
 - `p2`: Preference Level 2. These are more specific prompts, and consist of guidelines for certain types of actions (e.g., best practices and philosophies for writing code).
 - `p3`: Preference Level 3. These are even more specific prompts, and consist of directions for specific actions (e.g., creating a certain file, debugging, writing tests).
