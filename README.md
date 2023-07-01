@@ -1,6 +1,6 @@
 # GPT-Migrate
 
-## Easily migrate your codebase from one framework or language to another.
+## ◐ Easily migrate your codebase from one framework or language to another. ◑
 
 If you've ever faced the pain of migrating a codebase to a new framework or language, this project is for you. 
 
