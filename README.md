@@ -10,7 +10,7 @@ Migration is a costly, tedious, and non-trivial problem. Do not trust the curren
 
 However, with the collective brilliance of the OSS community and the current state of LLMs, it is also a very tractable problem.
 
-## Usage
+## 💪 Usage
 
 1. Install Docker and ensure that it's running. It's also recommended that you use at least GPT-4, preferably GPT-4-32k.
 
@@ -28,7 +28,7 @@ However, with the collective brilliance of the OSS community and the current sta
 
 By default, this script will execute the flask-nodejs benchmark. You can specify the language, source directory, and many other things using the options guide below.
 
-## Options
+## 💡 Options
 
 You can customize the behavior of GPT-Migrate by passing the following options to the `main.py` script:
 
@@ -67,7 +67,7 @@ This will take the Python code in `./my-python-app`, migrate it to Node.js, and 
 #### GPT-assisted debugging
 https://user-images.githubusercontent.com/25165841/250233075-eff1a535-f40e-42e4-914c-042c69ba9195.mp4
 
-## How it Works
+## 🤖 How it Works
 
 For migrating a repo from `--sourcelang` to `--targetlang`...
 
@@ -80,7 +80,7 @@ For migrating a repo from `--sourcelang` to `--targetlang`...
 7. It iteratively debugs the code for for you with context from logs, error messages, relevant files, and directory structure. It does so by choosing one or more actions (move, create, or edit files) then executing them. If it wants to execute any sort of shell script (moving files around), it will first ask for clearance. Finally, if at any point it gets stuck or the user ends the debugging loop, it will output directions for the user to follow to move to the next step of the migration.
 8. The new codebase is completed and exists in `--targetdir`.
 
-### Prompt Design
+### 📝 Prompt Design
 
 Subprompts are organized in the following fashion:
 
@@ -92,14 +92,16 @@ Subprompts are organized in the following fashion:
 
 Prompts are a combination of subprompts. This concept of tagging and composability can be extended to other properties as well to make prompts even more robust. This is an area we're highly interested in actively exploring.
 
-## Performance
+## 📈 Performance
 
 GPT-Migrate is currently in development alpha and is not yet ready for production use. For instance, on the relatively simple benchmarks, it gets through "easy" languages like python or javascript without a hitch ~50% of the time, and cannot get through more complex languages like C++ or Rust without some human assistance.
 
-## Benchmarks
+## ✅ Benchmarks
 
 We're actively looking to build up a robust benchmark repository. If you have a codebase that you'd like to contribute, please open a PR! The current benchmarks were built from scratch: REST API apps which have a few endpoints and dependency files.
 
-## Call to Action
+## 📣 Call to Action
 
 We're looking for talented co-contributors. Whether you have a particular passion about a specific language or framework, want to help in creating a more robust test suite, or generally have interesting ideas on how to make this better, we'd love to have you!
+
+◐ ◑ ◒ ◓ ◔ ◕ ◖ ◗ ◘ ◙ ◚ ◛ ◜ ◝ ◞ ◟ ◠ ◡ ◢ ◣ ◤ ◥ ◦ ◧ ◨ ◩ ◪ ◫ ◬ ◭ ◮ ◯
