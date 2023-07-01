@@ -3,6 +3,7 @@ from config import HIERARCHY, GUIDELINES, WRITE_CODE, CREATE_TESTS, SINGLEFILE
 import subprocess
 import typer
 import os
+import time as time
 from yaspin import yaspin
 from steps.debug import require_human_intervention
 
@@ -59,6 +60,7 @@ def validate_tests(testfile,globals):
         with yaspin(text="Validating tests...", spinner="dots") as spinner:
             # find all instances of globals.targetport in the testfile and replace with the port number globals.sourceport
             find_and_replace_file(os.path.join(globals.targetdir, f"gpt_migrate/{testfile}"), str(globals.targetport), str(globals.sourceport))
+            time.sleep(0.3)
             result = subprocess.run(["python3", os.path.join(globals.targetdir,f"gpt_migrate/{testfile}")], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True, text=True, timeout=15)
             spinner.ok("✅ ")
         print(result.stdout)
@@ -81,11 +83,13 @@ def validate_tests(testfile,globals):
             require_human_intervention(error_message,relevant_files=construct_relevant_files([(f"gpt_migrate/{testfile}", tests_content)]),globals=globals)
             raise typer.Exit()
     except subprocess.TimeoutExpired as e:
-        return f"gpt_migrate/{testfile} timed out due to an unknown error and requires fixing."
+        print(f"gpt_migrate/{testfile} timed out due to an unknown error and requires debugging.")
+        return f"gpt_migrate/{testfile} timed out due to an unknown error and requires debugging."
 
 def run_test(testfile,globals):
     try:
         with yaspin(text="Running tests...", spinner="dots") as spinner:
+            time.sleep(0.3)
             result = subprocess.run(["python3", os.path.join(globals.targetdir,f"gpt_migrate/{testfile}")], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True, text=True, timeout=15)
             spinner.ok("✅ ")
 
@@ -109,7 +113,8 @@ def run_test(testfile,globals):
             raise typer.Exit()
 
     except subprocess.TimeoutExpired as e:
-        return f"gpt_migrate/{testfile} timed out due to an unknown error and requires fixing."
+        print(f"gpt_migrate/{testfile} timed out due to an unknown error and requires debugging.")
+        return f"gpt_migrate/{testfile} timed out due to an unknown error and requires debugging."
 
 
         
