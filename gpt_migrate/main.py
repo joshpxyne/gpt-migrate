@@ -40,12 +40,14 @@ def main(
         testfiles: str = typer.Option("app.py", help="Comma-separated list of files that have functions to be tested. For instance, this could be an app.py or main.py file for Python app where your REST endpoints are. Include the full relative path."),
         sourceport: int = typer.Option(None, help="(Optional) port for testing the unit tests file against the original app."),
         targetport: int = typer.Option(8080, help="Port for testing the unit tests file against the migrated app."),
-        step: str = typer.Option("all", help="Step to run. Options are 'setup', 'migrate', 'test', 'all'.")
+        step: str = typer.Option("all", help="Step to run. Options are 'setup', 'migrate', 'test', 'all'."),
+        max_tokens: int = typer.Option(10000),
     ):
 
     ai = AI(
         model=model,
         temperature=temperature,
+        max_tokens=int(max_tokens),
     )
 
     sourcedir = os.path.abspath(sourcedir)
