@@ -1,6 +1,19 @@
-# GPT-Migrate
+<div align="center">
 
-### ◐ &nbsp; Easily migrate your codebase from one framework or language to another. &nbsp; ◑
+# ◐ GPT-Migrate ◑
+
+**Easily migrate your codebase from one framework or language to another.**
+
+<p>
+<img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/0xpayne/gpt-migrate" />
+<img alt="GitHub Issues" src="https://img.shields.io/github/issues/0xpayne/gpt-migrate" />
+<img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/0xpayne/gpt-migrate" />
+<img alt="Github License" src="https://img.shields.io/badge/License-MIT-green.svg" />
+</p>
+
+<br />
+
+</div>
 
 If you've ever faced the pain of migrating a codebase to a new framework or language, this project is for you. 
 
