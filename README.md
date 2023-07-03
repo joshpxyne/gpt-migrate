@@ -1,6 +1,6 @@
 <div align="center">
 
-# ◐ GPT-Migrate ◑
+# ◐ &nbsp; GPT-Migrate &nbsp; ◑
 
 **Easily migrate your codebase from one framework or language to another.**
 
