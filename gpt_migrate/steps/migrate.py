@@ -57,7 +57,8 @@ def write_migration(sourcefile, external_deps_list, globals):
                                                 sourcefile_content=sourcefile_content,
                                                 external_deps=','.join(external_deps_list),
                                                 source_directory_structure=globals.source_directory_structure,
-                                                target_directory_structure=build_directory_structure(globals.targetdir))
+                                                target_directory_structure=build_directory_structure(globals.targetdir),
+                                                guidelines=globals.guidelines)
 
     llm_write_file(prompt,
                     target_path=None,
@@ -84,7 +85,8 @@ def add_env_files(globals):
     prompt = add_docker_requirements_template.format(dockerfile_content=dockerfile_content,
                                                         external_deps=external_deps,
                                                         target_directory_structure=build_directory_structure(globals.targetdir),
-                                                        targetlang=globals.targetlang)
+                                                        targetlang=globals.targetlang,
+                                                        guidelines=globals.guidelines)
 
     external_deps_name, _, external_deps_content = llm_write_file(prompt,
                     target_path=None,
@@ -98,7 +100,8 @@ def add_env_files(globals):
     prompt = refine_dockerfile_template.format(dockerfile_content=dockerfile_content,
                                                 target_directory_structure=build_directory_structure(globals.targetdir),
                                                 external_deps_name=external_deps_name,
-                                                external_deps_content=external_deps_content)
+                                                external_deps_content=external_deps_content,
+                                                guidelines=globals.guidelines)
 
     llm_write_file(prompt,
                     target_path="Dockerfile",

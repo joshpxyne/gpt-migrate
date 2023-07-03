@@ -46,7 +46,8 @@ def create_tests(testfile,globals):
     create_tests_template = prompt_constructor(HIERARCHY, GUIDELINES, WRITE_CODE, CREATE_TESTS, SINGLEFILE)
 
     prompt = create_tests_template.format(targetport=globals.targetport,
-                                          old_file_content=old_file_content)
+                                          old_file_content=old_file_content,
+                                          guidelines=globals.guidelines)
 
     _, _, file_content = llm_write_file(prompt,
                                         target_path=f"gpt_migrate/{testfile}.tests.py",

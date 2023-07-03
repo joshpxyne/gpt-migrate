@@ -24,7 +24,7 @@ However, with the collective brilliance of the OSS community and the current sta
 
 `python main.py --targetlang nodejs`
 
-4. (Optional) If you'd like GPT-Migrate to validate the unit tests it creates against your app before it tests the migrated app with them, please have your existing app exposed and use the `--sourceport` flag.
+4. (Optional) If you'd like GPT-Migrate to validate the unit tests it creates against your app before it tests the migrated app with them, please have your existing app exposed and use the `--sourceport` flag. For executing this against the benchmark, open a separate terminal, navigate to the benchmarks/<language-pair>/source directory, and run `python app.py`. It will expose on port 5000. Use this with the `--sourceport` flag.
 
 By default, this script will execute the flask-nodejs benchmark. You can specify the language, source directory, and many other things using the options guide below.
 
@@ -50,9 +50,11 @@ You can customize the behavior of GPT-Migrate by passing the following options t
 
 - `--testfiles`: Comma-separated list of files that have functions to be tested. For instance, this could be an `app.py` or `main.py` file for a Python app where your REST endpoints are. Include the full relative path. Default is `"app.py"`.
 
-- `--sourceport`: (Optional) Port for testing the unit tests file against the original app. No default value.
+- `--sourceport`: (Optional) Port for testing the unit tests file against the original app. No default value. If not included, GPT-Migrate will not attempt to test the unit tests against your original app.
 
 - `--targetport`: Port for testing the unit tests file against the migrated app. Default is `8080`.
+
+- `--guidelines`: Stylistic or small functional guidelines that you'd like to be followed during the migration. For instance, "Use tabs, not spaces". Default is an empty string.
 
 - `--step`: Step to run. Options are `'setup'`, `'migrate'`, `'test'`, `'all'`. Default is `'all'`.
 
@@ -91,6 +93,12 @@ Subprompts are organized in the following fashion:
 - `p4`: Preference Level 4. These are the most specific prompts, and consist of formatting for output.
 
 Prompts are a combination of subprompts. This concept of tagging and composability can be extended to other properties as well to make prompts even more robust. This is an area we're highly interested in actively exploring.
+
+In this repo, the `prompt_constructor()` function takes in one or more subprompts and yields a string which may be formatted with variables, for example with `GUIDELINES` being a `p1`, `WRITE_CODE` being a `p2` etc:
+
+```python
+prompt = prompt_constructor(HIERARCHY, GUIDELINES, WRITE_CODE, DEBUG_TESTFILE, SINGLEFILE).format(targetlang=targetlang,buggyfile=buggyfile)
+```
 
 ## 📈 Performance
 

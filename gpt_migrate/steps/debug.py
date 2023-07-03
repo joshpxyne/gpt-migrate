@@ -28,7 +28,8 @@ def debug_error(error_message,relevant_files,globals):
         prompt = move_files_template.format(error_message=error_message[-min(MAX_ERROR_MESSAGE_CHARACTERS, len(error_message)):],
                                               target_directory_structure=build_directory_structure(globals.targetdir),
                                               current_full_path=globals.targetdir,
-                                              operating_system=globals.operating_system)
+                                              operating_system=globals.operating_system,
+                                              guidelines=globals.guidelines)
         
         file_name, language, shell_script_content = llm_write_file(prompt,
                                                             target_path="gpt_migrate/debug.sh",
@@ -91,7 +92,8 @@ def debug_error(error_message,relevant_files,globals):
                                                 targetlang=globals.targetlang,
                                                 sourcelang=globals.sourcelang,
                                                 docker_logs=docker_logs[-min(MAX_DOCKER_LOG_CHARACTERS, len(docker_logs)):],
-                                                relevant_files=relevant_files),
+                                                relevant_files=relevant_files,
+                                                guidelines=globals.guidelines),
 
             _, language, file_content = llm_write_file(prompt,
                                                         target_path=file_name,
@@ -111,7 +113,8 @@ def debug_error(error_message,relevant_files,globals):
         create_file_template = prompt_constructor(HIERARCHY, GUIDELINES, WRITE_CODE, CREATE_FILE, SINGLEFILE)
 
         prompt = create_file_template.format(error_message=error_message[-min(MAX_ERROR_MESSAGE_CHARACTERS, len(error_message)):],
-                                                target_directory_structure=build_directory_structure(globals.targetdir))
+                                                target_directory_structure=build_directory_structure(globals.targetdir),
+                                                guidelines=globals.guidelines)
 
         new_file_name, language, file_content = llm_write_file(prompt,
                                                                 waiting_message=f"Creating a new file...",
@@ -142,7 +145,8 @@ def debug_testfile(error_message,testfile,globals):
     prompt = debug_file_template.format(error_message=error_message[-min(MAX_ERROR_MESSAGE_CHARACTERS, len(error_message)):],
                                         file_name=file_name,
                                         old_file_content=old_file_content,
-                                        relevant_files=relevant_files),
+                                        relevant_files=relevant_files,
+                                        guidelines=globals.guidelines),
 
     _, language, file_content = llm_write_file(prompt,
                                                 target_path=file_name,
@@ -162,7 +166,8 @@ def require_human_intervention(error_message,relevant_files,globals):
     
     prompt = human_intervention_template.format(error_message=error_message[-min(MAX_ERROR_MESSAGE_CHARACTERS, len(error_message)):],
                                                 relevant_files=relevant_files,
-                                                target_directory_structure=build_directory_structure(globals.targetdir))
+                                                target_directory_structure=build_directory_structure(globals.targetdir),
+                                                guidelines=globals.guidelines)
     
     instructions = llm_run(prompt,
                             waiting_message=f"Writing instructions for how to proceed...",

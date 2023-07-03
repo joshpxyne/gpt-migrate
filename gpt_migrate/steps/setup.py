@@ -9,7 +9,8 @@ def create_environment(globals):
     
     prompt = docker_prompt_template.format(targetlang=globals.targetlang, 
                                            sourcelang=globals.sourcelang, 
-                                           sourceentry=globals.sourceentry)
+                                           sourceentry=globals.sourceentry,
+                                           guidelines=globals.guidelines)
 
     llm_write_file(prompt,
                     target_path="Dockerfile",
