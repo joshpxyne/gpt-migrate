@@ -37,7 +37,7 @@ However, with the collective brilliance of the OSS community and the current sta
 
 `python main.py --targetlang nodejs`
 
-4. (Optional) If you'd like GPT-Migrate to validate the unit tests it creates against your app before it tests the migrated app with them, please have your existing app exposed and use the `--sourceport` flag. For executing this against the benchmark, open a separate terminal, navigate to the benchmarks/<language-pair>/source directory, and run `python app.py`. It will expose on port 5000. Use this with the `--sourceport` flag.
+4. (Optional) If you'd like GPT-Migrate to validate the unit tests it creates against your app before it tests the migrated app with them, please have your existing app exposed and use the `--sourceport` flag. For executing this against the benchmark, open a separate terminal, navigate to the `benchmarks/language-pair/source` directory, and run `python app.py`. It will expose on port 5000. Use this with the `--sourceport` flag.
 
 By default, this script will execute the flask-nodejs benchmark. You can specify the language, source directory, and many other things using the options guide below.
 
