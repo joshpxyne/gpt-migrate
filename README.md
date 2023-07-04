@@ -132,6 +132,7 @@ Below are improvements on the to-do list. If you'd like to knock any of these or
 - Add unit tests to the entire project for better reliability and CI/CD
 - Add more benchmark examples, especially larger repos
 - Add functionality to let the LLM request access to dependency functions in other files as it debugs
+- Add support for other LLMs
 
 #### Low urgency
 - Enable internet search requests as the model debugs
