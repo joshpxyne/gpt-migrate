@@ -121,6 +121,17 @@ GPT-Migrate is currently in development alpha and is not yet ready for productio
 
 We're actively looking to build up a robust benchmark repository. If you have a codebase that you'd like to contribute, please open a PR! The current benchmarks were built from scratch: REST API apps which have a few endpoints and dependency files.
 
+## 🧗 Roadmap
+
+Below are improvements on the to-do list. If you'd like to knock any of these or others out, please submit a PR :)
+
+- Add logic for model input size limiting based on the window size. See issue #2.
+- Add functionality to let the LLM request access to dependency functions in other files as it debugs.
+- Enable internet search requests as the model debugs.
+- Add unit tests to the entire project for better reliability and CI/CD
+- Add more benchmark examples
+- Identify and compile language-specific issues + solve for them
+
 ## 📣 Call to Action
 
 We're looking for talented contributors. Whether you have a particular passion about a specific language or framework, want to help in creating a more robust test suite, or generally have interesting ideas on how to make this better, we'd love to have you!
