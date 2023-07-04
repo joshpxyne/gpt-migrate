@@ -37,7 +37,7 @@ However, with the collective brilliance of the OSS community and the current sta
 
 `python main.py --targetlang nodejs`
 
-4. (Optional) If you'd like GPT-Migrate to validate the unit tests it creates against your app before it tests the migrated app with them, please have your existing app exposed and use the `--sourceport` flag. For executing this against the benchmark, open a separate terminal, navigate to the `benchmarks/language-pair/source` directory, and run `python app.py`. It will expose on port 5000. Use this with the `--sourceport` flag.
+4. (Optional) If you'd like GPT-Migrate to validate the unit tests it creates against your app before it tests the migrated app with them, please have your existing app exposed and use the `--sourceport` flag. For executing this against the benchmark, open a separate terminal, navigate to the `benchmarks/language-pair/source` directory, and run `python app.py` after installing the requirements. It will expose on port 5000. Use this with the `--sourceport` flag.
 
 By default, this script will execute the flask-nodejs benchmark. You can specify the language, source directory, and many other things using the options guide below.
 
@@ -125,11 +125,16 @@ We're actively looking to build up a robust benchmark repository. If you have a 
 
 Below are improvements on the to-do list. If you'd like to knock any of these or others out, please submit a PR :)
 
-- Add logic for model input size limiting based on the window size. See issue #2.
-- Add functionality to let the LLM request access to dependency functions in other files as it debugs.
-- Enable internet search requests as the model debugs.
+#### High urgency
+- Add logic for model input size limiting based on the window size. See issue [#2](https://github.com/0xpayne/gpt-migrate/issues/2).
+
+#### Med urgency
 - Add unit tests to the entire project for better reliability and CI/CD
-- Add more benchmark examples
+- Add more benchmark examples, especially larger repos
+- Add functionality to let the LLM request access to dependency functions in other files as it debugs
+
+#### Low urgency
+- Enable internet search requests as the model debugs
 - Identify and compile language-specific issues + solve for them
 
 ## 📣 Call to Action
