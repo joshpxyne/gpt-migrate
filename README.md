@@ -132,6 +132,7 @@ Below are improvements on the to-do list. If you'd like to knock any of these or
 - Add unit tests to the entire project for better reliability and CI/CD
 - Add more benchmark examples, especially larger repos
 - Add functionality to let the LLM request access to dependency functions in other files as it debugs
+- Add support for other LLMs
 
 #### Low urgency
 - Enable internet search requests as the model debugs
@@ -140,5 +141,9 @@ Below are improvements on the to-do list. If you'd like to knock any of these or
 ## 📣 Call to Action
 
 We're looking for talented contributors. Whether you have a particular passion about a specific language or framework, want to help in creating a more robust test suite, or generally have interesting ideas on how to make this better, we'd love to have you!
+
+## 🛠 Expert-Assisted Migration
+
+Due to the inflow of requests, we've decided to create a standardized process for helping people with their migrations. If you're a company that needs help with a big migration or an expert that is willing to help with them, please visit the following website: [https://gpt-migrate.com/](https://gpt-migrate.com/)
 
 ## Join the conversation on [Twitter](https://twitter.com/joshpxyne/status/1675254164165910528)!
