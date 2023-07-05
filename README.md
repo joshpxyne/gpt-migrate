@@ -5,10 +5,12 @@
 **Easily migrate your codebase from one framework or language to another.**
 
 <p>
-<img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/0xpayne/gpt-migrate" />
-<img alt="GitHub Issues" src="https://img.shields.io/github/issues/0xpayne/gpt-migrate" />
-<img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/0xpayne/gpt-migrate" />
-<img alt="Github License" src="https://img.shields.io/badge/License-MIT-green.svg" />
+<a href="https://github.com/0xpayne/gpt-migrate/commits"><img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/0xpayne/gpt-migrate" /></a>
+<a href="https://github.com/0xpayne/gpt-migrate/issues"><img alt="GitHub Issues" src="https://img.shields.io/github/issues/0xpayne/gpt-migrate" /></a>
+<a href="https://github.com/0xpayne/gpt-migrate/pulls"><img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/0xpayne/gpt-migrate" /></a>
+<a href="https://github.com/0xpayne/gpt-migrate/blob/main/LICENSE"><img alt="Github License" src="https://img.shields.io/badge/License-MIT-green.svg" /></a>
+<a href="https://github.com/0xpayne/gpt-migrate"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/0xpayne/gpt-migrate?style=social" /></a>
+<a href="https://twitter.com/joshpxyne"><img alt="Twitter" src="https://img.shields.io/twitter/follow/joshpxyne?style=social" /></a>
 </p>
 
 <br />
