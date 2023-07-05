@@ -1,6 +1,7 @@
 from utils import prompt_constructor, llm_write_file, llm_run, build_directory_structure, copy_files, write_to_memory, read_from_memory
 from config import HIERARCHY, GUIDELINES, WRITE_CODE, GET_EXTERNAL_DEPS, GET_INTERNAL_DEPS, ADD_DOCKER_REQUIREMENTS, REFINE_DOCKERFILE, WRITE_MIGRATION, SINGLEFILE, EXCLUDED_FILES
 import os
+import typer
 
 
 def get_dependencies(sourcefile,globals):
@@ -37,7 +38,12 @@ def get_dependencies(sourcefile,globals):
                             success_message=None,
                             globals=globals)
     
-    internal_deps_list = internal_dependencies.split(',') if internal_dependencies != "NONE" else []
+    # Sanity checking internal dependencies to avoid infinite loops 
+    if sourcefile in internal_dependencies:
+        typer.echo(typer.style(f"Warning: {sourcefile} seems to depend on itself. Automatically removing {sourcefile} from the list of internal dependencies.", fg=typer.colors.YELLOW))
+        internal_dependencies = internal_dependencies.replace(sourcefile, "")
+    
+    internal_deps_list = [dep for dep in internal_dependencies.split(',') if dep] if internal_dependencies != "NONE" else []
     
     return internal_deps_list, external_deps_list
                     
