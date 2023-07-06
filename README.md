@@ -16,7 +16,7 @@
 
 </div>
 
-Today only - please share some love on [Product Hunt](https://www.producthunt.com/posts/gpt-migrate)
+Today only - please share some love on [Product Hunt](https://www.producthunt.com/posts/gpt-migrate)! 🚀
 
 If you've ever faced the pain of migrating a codebase to a new framework or language, this project is for you. 
 
