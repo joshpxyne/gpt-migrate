@@ -8,7 +8,7 @@ The developers and contributors of this project do not accept any responsibility
 
 Please note that the use of large language models can be expensive. By utilizing this project, you acknowledge that you are responsible for monitoring and managing your own token usage and the associated costs. It is highly recommended to check your usage regularly and set up any necessary limits or alerts to prevent unexpected charges. This is especially true of GPT-Migrate, which will write and potentially re-write the entirety of a codebase.
 
-As an autonomous experiment, GPT-Migrate may generate code or take actions that are not in line with real-world business practices or legal requirements. It is your responsibility to ensure that any actions or decisions made by the gneerated code comply with all applicable laws, regulations, and ethical standards. The developers and contributors of this project shall not be held responsible for any consequences arising from the use of this software.
+As an autonomous experiment, GPT-Migrate may generate code or take actions that are not in line with real-world business practices or legal requirements. It is your responsibility to ensure that any actions or decisions made by the generated code comply with all applicable laws, regulations, and ethical standards. The developers and contributors of this project shall not be held responsible for any consequences arising from the use of this software.
 
 By using GPT-Migrate, you agree to indemnify, defend, and hold harmless the developers, contributors, and any affiliated parties from and against any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising from your use of this software or your violation of these terms.
 
