@@ -16,8 +16,6 @@
 
 </div>
 
-Today only - please share some love on [Product Hunt](https://www.producthunt.com/posts/gpt-migrate)! 🚀
-
 If you've ever faced the pain of migrating a codebase to a new framework or language, this project is for you. 
 
 https://user-images.githubusercontent.com/25165841/250232917-bcc99ce8-99b7-4e3d-a653-f89e163ed825.mp4
