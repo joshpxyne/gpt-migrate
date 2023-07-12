@@ -5,7 +5,6 @@ import os
 import json
 import typer
 
-
 def get_function_signatures(targetfiles: List[str], globals): 
     '''  Get the function signatures and a one-sentence summary for each function '''    
     all_sigs = []
@@ -40,9 +39,6 @@ def get_function_signatures(targetfiles: List[str], globals):
                 json.dump(sigs, f)
 
     return all_sigs
-
-
-
 
 def get_dependencies(sourcefile, globals):
 
