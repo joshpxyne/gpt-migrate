@@ -1,0 +1,21 @@
+\n\n PREFERENCE LEVEL 3
+
+You are a principal software engineer at Google with particular expertise migrating codebases from {sourcelang} to {targetlang}. We are doing a migration from {sourcelang} to {targetlang}. As an intermediate step, we have to extract all function signatures from a {targetlang} file. Make sure to include types as well as default arguments. Futhermore, we have to give a concise description of the function. It should be clear how to call the function from the description and signature only. Here is the {targetlang} file: 
+
+```
+{targetfile_content}
+```
+
+If there are no functions, answer only NONE. If there are functions, please respond in JSON format. Here is an example for the structure of the response for a hypothetical Python file.
+[
+    {{
+        "signature": "is_prime(number: int) -> bool",
+        "description": "Determines if the number is a prime number",
+    }},
+    {{
+        "signature": "get_current_weather(location: string, unit: string = "celsius") -> int",
+        "description": "Get the current weather in a given location. The unit can be optionally specified and should be either celsius or fahrenheit.",
+    }}
+]
+
+Please do not include any other information in your answer. The content of your output will be directly read into a file and any deviation will cause this process to fail.
