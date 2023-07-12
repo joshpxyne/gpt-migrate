@@ -3,6 +3,7 @@ from config import HIERARCHY, GUIDELINES, WRITE_CODE, GET_EXTERNAL_DEPS, GET_INT
 from typing import List
 import os
 import json
+import typer
 
 
 def get_function_signatures(targetfiles: List[str], globals): 
@@ -77,7 +78,12 @@ def get_dependencies(sourcefile, globals):
                             success_message=None,
                             globals=globals)
     
-    internal_deps_list = internal_dependencies.split(',') if internal_dependencies != "NONE" else []
+    # Sanity checking internal dependencies to avoid infinite loops 
+    if sourcefile in internal_dependencies:
+        typer.echo(typer.style(f"Warning: {sourcefile} seems to depend on itself. Automatically removing {sourcefile} from the list of internal dependencies.", fg=typer.colors.YELLOW))
+        internal_dependencies = internal_dependencies.replace(sourcefile, "")
+    
+    internal_deps_list = [dep for dep in internal_dependencies.split(',') if dep] if internal_dependencies != "NONE" else []
     
     return internal_deps_list, external_deps_list
                     
