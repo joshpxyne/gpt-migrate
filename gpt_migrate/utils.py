@@ -1,6 +1,7 @@
 import os
 import typer
 from yaspin import yaspin
+from pathlib import Path
 from collections import Counter
 import fnmatch
 import re
@@ -185,7 +186,17 @@ def construct_relevant_files(files):
         content = file[1]
         ret += name+":\n\n" + "```\n"+content+"\n```\n\n"
     return ret
-            
+
+def file_exists_in_memory(filename):
+    file = Path('memory/' + filename)
+    return file.exists()
+
+def convert_sigs_to_string(sigs):
+    sig_string = ""
+    for sig in sigs:
+        sig_string += sig["signature"] + "\n" + sig["description"] + "\n\n"
+    return sig_string
+
 def write_to_memory(filename,content):
     with open('memory/'+filename, 'a+') as file:
         for item in content:

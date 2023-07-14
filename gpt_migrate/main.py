@@ -2,6 +2,7 @@ import typer
 from utils import detect_language, build_directory_structure
 import os
 import time as time
+from collections import defaultdict
 
 from ai import AI
 
@@ -87,12 +88,14 @@ def main(
 
     ''' 2. Migration '''
     if step in ['migrate', 'all']:
-        def migrate(sourcefile, globals):
+        target_deps_per_file = defaultdict(list) 
+        def migrate(sourcefile, globals, parent_file=None):
             # recursively work through each of the files in the source directory, starting with the entrypoint.
             internal_deps_list, external_deps_list = get_dependencies(sourcefile=sourcefile,globals=globals)
             for dependency in internal_deps_list:
-                migrate(dependency, globals)
-            write_migration(sourcefile, external_deps_list, globals)
+                migrate(dependency, globals, parent_file=sourcefile)
+            file_name = write_migration(sourcefile, external_deps_list, target_deps_per_file.get(sourcefile), globals)
+            target_deps_per_file[parent_file].append(file_name)
 
         migrate(sourceentry, globals)
         add_env_files(globals)
