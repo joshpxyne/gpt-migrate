@@ -2,11 +2,12 @@ import subprocess
 import typer
 from yaspin import yaspin
 from pathlib import Path
-from tree_sitter import Language, Parser
+from tree_sitter import Language, Parser, Node
+from collections.abc import Iterator
 
 from config import EXTENSION_TO_TREE_SITTER_GRAMMAR_REPO, EXTENSION_TO_LANGUAGE
 
-def decompose_file(file_path: str):
+def decompose_file(file_path: str) -> Iterator[Node]:
     # Do a first-level parse tree decomposition of the file at file_path
     with yaspin(text="Decomposing file", spinner="dots") as spinner:
         repo_url = EXTENSION_TO_TREE_SITTER_GRAMMAR_REPO.get(file_path.split('.')[-1])
