@@ -74,6 +74,30 @@ INCLUDED_EXTENSIONS = (
     # TODO: add more
 )
 
+TREE_SITTER_REPO_STUB = "https://github.com/tree-sitter/tree-sitter-"
+
+EXTENSION_TO_TREE_SITTER_GRAMMAR_REPO = {
+    'py': TREE_SITTER_REPO_STUB + "python",
+    'js': TREE_SITTER_REPO_STUB + "javascript",
+    'java': TREE_SITTER_REPO_STUB + "java",
+    'rb': TREE_SITTER_REPO_STUB + "ruby",
+    'php': TREE_SITTER_REPO_STUB + "php",
+    'cs': TREE_SITTER_REPO_STUB + "c-sharp",
+    'go': TREE_SITTER_REPO_STUB + "go",
+    'rs': TREE_SITTER_REPO_STUB + "rust",
+    'cpp': TREE_SITTER_REPO_STUB + "cpp",
+    'cc': TREE_SITTER_REPO_STUB + "cpp",
+    'cxx': TREE_SITTER_REPO_STUB + "cpp",
+    'c': TREE_SITTER_REPO_STUB + "c",
+    'swift': TREE_SITTER_REPO_STUB + "swift",
+    'scala': TREE_SITTER_REPO_STUB + "scala",
+    'ts': TREE_SITTER_REPO_STUB + "typescript",
+    'tsx': TREE_SITTER_REPO_STUB + "typescript",
+    'jsx': TREE_SITTER_REPO_STUB + "javascript",
+    'hs': TREE_SITTER_REPO_STUB + "haskell",
+    'jl': TREE_SITTER_REPO_STUB + "julia",
+}
+
 EXTENSION_TO_LANGUAGE = {
     'py': 'Python',
     'js': 'JavaScript',
@@ -107,5 +131,4 @@ EXTENSION_TO_LANGUAGE = {
     'hs': 'Haskell',
     'jl': 'Julia',
     'nim': 'Nim',
-    'php': 'PHP',
 }

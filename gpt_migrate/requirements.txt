@@ -2,3 +2,4 @@ typer
 langchain
 yaspin
 openai
+tree_sitter
