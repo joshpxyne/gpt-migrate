@@ -2,7 +2,7 @@
 name = "gpt-migrate"
 version = "0.1.0"
 description = "Easily migrate your codebase from one framework or language to another."
-authors = ["Your Name <youremail@example.com>"]
+authors = ["0xpayne"]
 python = "^3.8"
 
 [tool.poetry.dependencies]
