@@ -28,6 +28,18 @@ However, with the collective brilliance of the OSS community and the current sta
 
 1. Install Docker and ensure that it's running. It's also recommended that you use at least GPT-4, preferably GPT-4-32k.
 
+## 📦 Installation using Poetry
+
+1. Install Poetry by following the instructions on the [official Poetry website](https://python-poetry.org/docs/#installation).
+
+2. Once Poetry is installed, navigate to the project directory and install the project dependencies using the following command:
+
+```bash
+poetry install
+```
+
+This will create a virtual environment and install all the necessary dependencies in that environment.
+
 2. Set your [OpenAI API key](https://platform.openai.com/account/api-keys) and install the python requirements:
 
 `export OPENAI_API_KEY=<your key>`

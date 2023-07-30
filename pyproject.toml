@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "gpt-migrate"
+version = "0.1.0"
+description = "Easily migrate your codebase from one framework or language to another."
+authors = ["0xpayne"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+typer = "^0.9.0"
+langchain = "^0.0.238"
+yaspin = "^2.3.0"
+openai = "^0.27.8"
+tree-sitter = "^0.20.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
