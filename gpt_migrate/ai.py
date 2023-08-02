@@ -3,6 +3,7 @@ from config import OPENAI_API_KEY
 import os
 import openai
 from utils import parse_code_string
+from litellm import completion
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -19,7 +20,7 @@ class AI:
     
     def write_code(self, prompt):
         message=[{"role": "user", "content": str(prompt)}] 
-        response = openai.ChatCompletion.create(
+        response = completion(
             messages=message,
             stream=False,
             model=self.model_name,
@@ -34,7 +35,7 @@ class AI:
 
     def run(self, prompt):
         message=[{"role": "user", "content": str(prompt)}] 
-        response = openai.ChatCompletion.create(
+        response = completion(
             messages=message,
             stream=True,
             model=self.model_name,
