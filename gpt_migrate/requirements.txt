@@ -3,3 +3,4 @@ langchain
 yaspin
 openai
 tree_sitter
+litellm==0.1.213
