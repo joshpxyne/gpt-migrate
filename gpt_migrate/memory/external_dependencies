@@ -1,6 +1,3 @@
-rocket
-serde
-serde_json
+express
 bcrypt
-rusqlite
-serde_json
+node-json-db
