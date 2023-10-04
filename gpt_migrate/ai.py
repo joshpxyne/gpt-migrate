@@ -1,11 +1,11 @@
 from langchain.chat_models import ChatOpenAI
-from config import OPENAI_API_KEY
 import os
 import openai
 from utils import parse_code_string
 from litellm import completion
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_base = "https://openrouter.ai/api/v1"
+openai.api_key = os.getenv("OPENROUTER_API_KEY")
 
 class AI:
     def __init__(self, model="gpt-4-32k", temperature=0.1, max_tokens=10000):
