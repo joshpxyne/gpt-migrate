@@ -31,9 +31,7 @@ class Globals:
 
 @app.command()
 def main(
-        model: str = typer.Option("gpt-4-32k", help="Large Language Model to be used."),
-        model_provider: str = typer.Option("openai", help="Model provider to be used."),
-        modelrouter: str = typer.Option("openrouter", help="Model router to be used. Options are 'openrouter' or 'litellm'."),
+        model: str = typer.Option('openrouter/openai/gpt-4-32k', help="Large Language Model to be used. Default is 'openrouter/openai/gpt-4-32k'. To use OpenAI directly with your API key, use 'gpt-4-32k'."),
         temperature: float = typer.Option(0, help="Temperature setting for the AI model."),
         sourcedir: str = typer.Option("../benchmarks/flask-nodejs/source", help="Source directory containing the code to be migrated."),
         sourcelang: str = typer.Option(None, help="Source language or framework of the code to be migrated."),
@@ -50,9 +48,7 @@ def main(
 
     ai = AI(
         model=model,
-        model_provider=model_provider,
         temperature=temperature,
-        modelrouter=modelrouter
     )
 
     sourcedir = os.path.abspath(sourcedir)

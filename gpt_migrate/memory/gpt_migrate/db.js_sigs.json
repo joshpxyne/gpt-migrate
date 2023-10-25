@@ -1,1 +1,0 @@
-[{"signature": "readItems() -> object", "description": "Reads the items from a JSON file and returns them as an object."}, {"signature": "writeItems(groceryItems: object)", "description": "Writes the given grocery items object to a JSON file."}]

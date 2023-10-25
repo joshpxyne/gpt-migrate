@@ -40,9 +40,9 @@ poetry install
 
 This will create a virtual environment and install all the necessary dependencies in that environment.
 
-2. Set your [OpenRouter API key](https://openrouter.ai/docs#api-keys) and install the python requirements:
+2. Set your [OpenAI API key](https://platform.openai.com/account/api-keys) and install the python requirements:
 
-`export OPENROUTER_API_KEY=<your key>`
+`export OPENAI_API_KEY=<your key>`
 
 `pip install -r requirements.txt`
 
