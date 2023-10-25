@@ -40,10 +40,10 @@ poetry install
 
 This will create a virtual environment and install all the necessary dependencies in that environment.
 
-2. Set your [OpenAI API key](https://platform.openai.com/account/api-keys) and install the python requirements:
+2. Set your [OpenRouter API key](https://openrouter.ai/docs#api-keys) (default) and/or your [OpenAI API key](https://platform.openai.com/account/api-keys) (to use the OpenAI API directly...in this case, set --model to `gpt-4-32k` or your desired model) and install the python requirements:
 
+`export OPENROUTER_API_KEY=<your key>`
 `export OPENAI_API_KEY=<your key>`
-
 `pip install -r requirements.txt`
 
 3. Run the main script with the target language you want to migrate to:
