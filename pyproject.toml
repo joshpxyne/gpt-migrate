@@ -11,6 +11,8 @@ langchain = "^0.0.238"
 yaspin = "^2.3.0"
 openai = "^0.27.8"
 tree-sitter = "^0.20.1"
+litellm = "1.20.5"
+pydantic = "1.10.8"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
