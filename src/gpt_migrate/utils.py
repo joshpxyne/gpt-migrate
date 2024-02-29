@@ -30,8 +30,10 @@ def detect_language(source_directory):
 
 def prompt_constructor(*args):
     prompt = ""
+    current_file_dir = os.path.dirname(__file__)
     for arg in args:
-        with open(os.path.abspath(f"prompts/{arg}"), "r") as file:
+        file_path = os.path.join(current_file_dir, "prompts", arg)
+        with open(file_path, "r") as file:
             prompt += file.read().strip()
     return prompt
 
@@ -222,8 +224,9 @@ def construct_relevant_files(files):
 
 
 def file_exists_in_memory(filename):
-    file = Path("memory/" + filename)
-    return file.exists()
+    current_file_dir = Path(__file__).parent
+    file_path = current_file_dir / "memory" / filename
+    return file_path.exists()
 
 
 def convert_sigs_to_string(sigs):
@@ -234,15 +237,20 @@ def convert_sigs_to_string(sigs):
 
 
 def write_to_memory(filename, content):
-    with open("memory/" + filename, "a+") as file:
+    directory = os.path.join(os.path.dirname(__file__), "memory")
+    os.makedirs(directory, exist_ok=True)
+    file_path = os.path.join(directory, filename)
+    with open(file_path, "a+") as file:
+        file.seek(0)
+        existing_content = set(file.read().split("\n"))
         for item in content:
-            if item not in file.read().split("\n"):
+            if item not in existing_content:
                 file.write(item + "\n")
 
 
 def read_from_memory(filename):
-    content = ""
-    with open("memory/" + filename, "r") as file:
+    file_path = os.path.join(os.path.dirname(__file__), "memory", filename)
+    with open(file_path, "r") as file:
         content = file.read()
     return content
 
