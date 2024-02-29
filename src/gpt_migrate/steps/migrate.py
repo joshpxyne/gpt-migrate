@@ -96,6 +96,10 @@ def get_dependencies(sourcefile, globals):
             globals.sourcedir, sourcefile_dir, file_basename, filename
         )
 
+    if not os.path.isfile(source_path):
+        # skip
+        return [], []
+
     with open(source_path, "r") as file:
         sourcefile_content = file.read()
 
