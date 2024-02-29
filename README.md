@@ -59,6 +59,8 @@ You can customize the behavior of GPT-Migrate by passing the following options t
 
 - `--model`: The Large Language Model to be used. Default is `"gpt-4-32k"`.
 
+- `--maxtokens`: The maximum number of tokens in model response. Default is `10000`.
+
 - `--temperature`: Temperature setting for the AI model. Default is `0`.
 
 - `--sourcedir`: Source directory containing the code to be migrated. Default is `"../benchmarks/flask-nodejs/source"`.
