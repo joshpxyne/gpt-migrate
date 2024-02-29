@@ -3,15 +3,24 @@ name = "gpt-migrate"
 version = "0.1.0"
 description = "Easily migrate your codebase from one framework or language to another."
 authors = ["0xpayne"]
+maintainers = ["Jean-Baptiste Martin"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
 typer = "^0.9.0"
-langchain = "^0.0.238"
-yaspin = "^2.3.0"
-openai = "^0.27.8"
-tree-sitter = "^0.20.1"
+yaspin = "^3.0.1"
+openai = "^1.13.3"
+tree-sitter = "^0.20.4"
+litellm = "^1.28.0"
+pydantic = "^2.6.3"
+langchain-openai = "^0.0.8"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.2.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+gpt-migrate = "gpt_migrate.main:app"
