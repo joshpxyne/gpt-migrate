@@ -60,12 +60,12 @@ def llm_write_file(prompt, target_path, waiting_message, success_message, global
     if file_name == "INSTRUCTIONS:":
         return "INSTRUCTIONS:", "", file_content
 
-    if target_path:
-        with open(os.path.join(globals.targetdir, target_path), "w") as file:
-            file.write(file_content)
-    else:
-        with open(os.path.join(globals.targetdir, file_name), "w") as file:
-            file.write(file_content)
+    full_path = os.path.join(globals.targetdir, target_path or file_name)
+
+    os.makedirs(os.path.dirname(full_path), exist_ok=True)
+
+    with open(full_path, "w") as file:
+        file.write(file_content)
 
     if success_message:
         success_text = typer.style(success_message, fg=typer.colors.GREEN)
@@ -88,12 +88,12 @@ def llm_write_files(prompt, target_path, waiting_message, success_message, globa
     for result in results:
         file_name, language, file_content = result
 
-        if target_path:
-            with open(os.path.join(globals.targetdir, target_path), "w") as file:
-                file.write(file_content)
-        else:
-            with open(os.path.join(globals.targetdir, file_name), "w") as file:
-                file.write(file_content)
+        full_path = os.path.join(globals.targetdir, target_path or file_name)
+
+        os.makedirs(os.path.dirname(full_path), exist_ok=True)
+
+        with open(full_path, "w") as file:
+            file.write(file_content)
 
         if not success_message:
             success_text = typer.style(
