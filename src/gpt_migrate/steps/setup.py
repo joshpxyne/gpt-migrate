@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from gpt_migrate.utils import prompt_constructor, llm_write_file
 from gpt_migrate.config import (
     HIERARCHY,
@@ -30,5 +32,8 @@ def create_environment(globals):
         globals=globals,
     )
 
-    with open("memory/external_dependencies", "w") as file:
+    memory_path = Path(__file__).parent / ".." / "memory"
+    memory_path.mkdir(parents=True, exist_ok=True)
+    external_dependencies_path = memory_path / "external_dependencies"
+    with external_dependencies_path.open("w") as file:
         file.write("")
