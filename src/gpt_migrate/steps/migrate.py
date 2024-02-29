@@ -70,6 +70,7 @@ def get_function_signatures(targetfiles: List[str], globals):
 
             all_sigs.extend(sigs)
 
+            os.makedirs(os.path.dirname(sigs_file_path), exist_ok=True)
             with open(sigs_file_path, "w") as f:
                 json.dump(sigs, f)
 
