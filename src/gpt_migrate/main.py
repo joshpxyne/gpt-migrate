@@ -52,8 +52,8 @@ class Globals:
 @app.command()
 def main(
     model: str = typer.Option(
-        "openrouter/openai/gpt-4-32k",
-        help="Large Language Model to be used. Default is 'openrouter/openai/gpt-4-32k'. To use OpenAI directly with your API key, use 'gpt-4-32k'.",
+        "gpt-4-32k",
+        help="Large Language Model to be used. Default is 'gpt-4-32k'.",
     ),
     temperature: float = typer.Option(0, help="Temperature setting for the AI model."),
     sourcedir: str = typer.Option(
