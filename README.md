@@ -40,15 +40,14 @@ poetry install
 
 This will create a virtual environment and install all the necessary dependencies in that environment.
 
-2. Set your [OpenRouter API key](https://openrouter.ai/docs#api-keys) (default) and/or your [OpenAI API key](https://platform.openai.com/account/api-keys) (to use the OpenAI API directly...in this case, set --model to `gpt-4-32k` or your desired model) and install the python requirements:
+2. Set your [OpenRouter API key](https://openrouter.ai/docs#api-keys) (default) and/or your [OpenAI API key](https://platform.openai.com/account/api-keys) (to use the OpenAI API directly...in this case, set --model to `gpt-4-32k` or your desired model):
 
 `export OPENROUTER_API_KEY=<your key>`
 `export OPENAI_API_KEY=<your key>`
-`pip install -r requirements.txt`
 
 3. Run the main script with the target language you want to migrate to:
 
-`python main.py --targetlang nodejs`
+`poetry run gpt-migrate`
 
 4. (Optional) If you'd like GPT-Migrate to validate the unit tests it creates against your app before it tests the migrated app with them, please have your existing app exposed and use the `--sourceport` flag. For executing this against the benchmark, open a separate terminal, navigate to the `benchmarks/language-pair/source` directory, and run `python app.py` after installing the requirements. It will expose on port 5000. Use this with the `--sourceport` flag.
 
