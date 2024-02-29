@@ -83,6 +83,10 @@ def main(
         None,
         help="(Optional) port for testing the unit tests file against the original app.",
     ),
+    maxtokens: int = typer.Option(
+        10000,
+        help="(Optional) maximum number of tokens in model response.",
+    ),
     targetport: int = typer.Option(
         8080, help="Port for testing the unit tests file against the migrated app."
     ),
@@ -97,6 +101,7 @@ def main(
     ai = AI(
         model=model,
         temperature=temperature,
+        max_tokens=maxtokens,
     )
 
     sourcedir = os.path.abspath(sourcedir)
