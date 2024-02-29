@@ -1,6 +1,7 @@
 from typing import List
 import os
 import json
+from pathlib import Path
 
 import typer
 
@@ -36,9 +37,10 @@ def get_function_signatures(targetfiles: List[str], globals):
 
     for targetfile in targetfiles:
         sigs_file_name = targetfile + "_sigs.json"
+        sigs_file_path = Path(__file__).parent / ".." / "memory" / sigs_file_name
 
         if file_exists_in_memory(sigs_file_name):
-            with open(os.path.join("memory", sigs_file_name), "r") as f:
+            with open(sigs_file_path, "r") as f:
                 sigs = json.load(f)
             all_sigs.extend(sigs)
 
@@ -68,7 +70,7 @@ def get_function_signatures(targetfiles: List[str], globals):
 
             all_sigs.extend(sigs)
 
-            with open(os.path.join("memory", sigs_file_name), "w") as f:
+            with open(sigs_file_path, "w") as f:
                 json.dump(sigs, f)
 
     return all_sigs
