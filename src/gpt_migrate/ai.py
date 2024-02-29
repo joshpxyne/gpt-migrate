@@ -53,5 +53,6 @@ class AI:
         for chunk in response:
             delta = chunk["choices"][0]["delta"]
             msg = delta.get("content", "")
-            chat += msg
+            if msg is not None:
+                chat += msg
         return chat
