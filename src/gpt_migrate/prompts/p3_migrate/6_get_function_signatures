@@ -18,4 +18,4 @@ If there are no functions, answer only NONE. If there are functions, please resp
     }}
 ]
 
-Please do not include any other information in your answer. The content of your output will be directly read into a file and any deviation will cause this process to fail.
+Please do not include any other information in your answer. The content of your output will be directly read into a file and any deviation will cause this process to fail. Do not surround results is markdown symbols.
