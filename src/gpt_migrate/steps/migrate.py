@@ -86,8 +86,16 @@ def get_dependencies(sourcefile, globals):
         HIERARCHY, GUIDELINES, GET_INTERNAL_DEPS
     )
 
-    sourcefile_content = ""
-    with open(os.path.join(globals.sourcedir, sourcefile), "r") as file:
+    source_path = os.path.join(globals.sourcedir, sourcefile)
+    if not os.path.isfile(source_path):
+        sourcefile_dir = os.path.dirname(sourcefile)
+        filename = os.path.basename(sourcefile)
+        file_basename, file_extension = os.path.splitext(filename)
+        source_path = os.path.join(
+            globals.sourcedir, sourcefile_dir, file_basename, filename
+        )
+
+    with open(source_path, "r") as file:
         sourcefile_content = file.read()
 
     prompt = external_deps_prompt_template.format(
