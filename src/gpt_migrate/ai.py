@@ -1,13 +1,7 @@
-import os
-
-import openai
 from langchain_openai import ChatOpenAI
 from litellm import completion
 
 from gpt_migrate.utils import parse_code_string
-from gpt_migrate.config import OPENAI_API_KEY
-
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 class AI:
