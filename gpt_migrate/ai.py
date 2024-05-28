@@ -1,4 +1,4 @@
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from config import OPENAI_API_KEY
 import os
 import openai
@@ -17,9 +17,9 @@ class AI:
         except Exception as e:
             print(e)
             self.model_name = "gpt-3.5-turbo"
-    
+
     def write_code(self, prompt):
-        message=[{"role": "user", "content": str(prompt)}] 
+        message=[{"role": "user", "content": str(prompt)}]
         response = completion(
             messages=message,
             stream=False,
@@ -34,7 +34,7 @@ class AI:
             return code_triples
 
     def run(self, prompt):
-        message=[{"role": "user", "content": str(prompt)}] 
+        message=[{"role": "user", "content": str(prompt)}]
         response = completion(
             messages=message,
             stream=True,
@@ -48,4 +48,3 @@ class AI:
             msg = delta.get("content", "")
             chat += msg
         return chat
-    
