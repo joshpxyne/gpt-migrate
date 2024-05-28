@@ -4,4 +4,4 @@ yaspin==3.0.2
 openai==1.30.3
 tree_sitter==0.22.3
 litellm==1.38.11
-pydantic==2.7.1
+pydantic==1.10.15
