@@ -1,6 +1,6 @@
 typer==0.9.0
 langchain==0.0.238
-yaspin==2.3.0
+yaspin==3.0.2
 openai==0.27.8
 tree_sitter==0.22.3
 litellm==0.1.213
