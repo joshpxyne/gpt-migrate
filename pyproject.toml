@@ -7,7 +7,7 @@ authors = ["0xpayne"]
 [tool.poetry.dependencies]
 python = "^3.9"
 typer = "^0.12.3"
-langchain = "^0.0.238"
+langchain-openai = "^0.1.7"
 yaspin = "^2.3.0"
 openai = "^1.30.3"
 tree-sitter = "^0.22.3"
