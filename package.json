@@ -1,0 +1,11 @@
+{
+  "name": "gpt-migrate",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">",
+  "scripts": {
+    "pip": "cd gpt_migrate && pip install -r requirements.txt",
+    "migrate": "python main.py --targetlang nodejs"
+  },
+  "keywords": [],
+  "license": "MIT"
+}
