@@ -1,5 +1,5 @@
 typer==0.9.0
-langchain==0.0.238
+langchain-community==0.2.1
 yaspin==3.0.2
 openai==1.30.3
 tree_sitter==0.22.3
