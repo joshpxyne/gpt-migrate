@@ -9,7 +9,7 @@ python = "^3.9"
 typer = "^0.12.3"
 langchain = "^0.0.238"
 yaspin = "^2.3.0"
-openai = "^0.27.8"
+openai = "^1.30.3"
 tree-sitter = "^0.22.3"
 
 [build-system]
