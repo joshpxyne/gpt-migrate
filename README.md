@@ -5,9 +5,6 @@
 **Easily migrate your codebase from one framework or language to another.**
 
 <p>
-<a href="https://github.com/0xpayne/gpt-migrate/commits"><img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/0xpayne/gpt-migrate" /></a>
-<a href="https://github.com/0xpayne/gpt-migrate/issues"><img alt="GitHub Issues" src="https://img.shields.io/github/issues/0xpayne/gpt-migrate" /></a>
-<a href="https://github.com/0xpayne/gpt-migrate/pulls"><img alt="GitHub Pull Requests" src="https://img.shields.io/github/issues-pr/0xpayne/gpt-migrate" /></a>
 <a href="https://github.com/0xpayne/gpt-migrate/blob/main/LICENSE"><img alt="Github License" src="https://img.shields.io/badge/License-MIT-green.svg" /></a>
 <a href="https://github.com/0xpayne/gpt-migrate"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/0xpayne/gpt-migrate?style=social" /></a>
 </p>
@@ -16,7 +13,7 @@
 
 </div>
 
-If you've ever faced the pain of migrating a codebase to a new framework or language, this project is for you. 
+If you've ever faced the pain of migrating a codebase to a new framework or language, this project is for you.
 
 https://user-images.githubusercontent.com/25165841/250232917-bcc99ce8-99b7-4e3d-a653-f89e163ed825.mp4
 
@@ -93,6 +90,7 @@ python main.py --sourcedir /path/to/my-python-app --sourceentry app.py --targetd
 This will take the Python code in `./my-python-app`, migrate it to Node.js, and write the resulting code to `./my-nodejs-app`.
 
 #### GPT-assisted debugging
+
 https://user-images.githubusercontent.com/25165841/250233075-eff1a535-f40e-42e4-914c-042c69ba9195.mp4
 
 ## 🤖 How it Works
@@ -139,15 +137,18 @@ We're actively looking to build up a robust benchmark repository. If you have a 
 Below are improvements on the to-do list. If you'd like to knock any of these or others out, please submit a PR :)
 
 #### High urgency
+
 - Add logic for model input size limiting based on the window size. See issue [#2](https://github.com/0xpayne/gpt-migrate/issues/2).
 
 #### Med urgency
+
 - Add unit tests to the entire project for better reliability and CI/CD
 - Add more benchmark examples, especially larger repos
 - Add functionality to let the LLM request access to dependency functions in other files as it debugs
 - Add support for other LLMs
 
 #### Low urgency
+
 - Enable internet search requests as the model debugs
 - Identify and compile language-specific issues + solve for them
 
