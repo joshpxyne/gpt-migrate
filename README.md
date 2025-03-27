@@ -103,7 +103,7 @@ For migrating a repo from `--sourcelang` to `--targetlang`...
 4. It spins up the Docker environment with the new codebase, exposing it on `--targetport` and iteratively debugging as needed.
 5. It develops unit tests using Python's unittest framework, and optionally tests these against your existing app if it's running and exposed on `--sourceport`, iteratively debugging as needed. This step can be started from with the `--step test` option.
 6. It tests the new code on `--targetport` against these unit tests.
-7. It iteratively debugs the code for for you with context from logs, error messages, relevant files, and directory structure. It does so by choosing one or more actions (move, create, or edit files) then executing them. If it wants to execute any sort of shell script (moving files around), it will first ask for clearance. Finally, if at any point it gets stuck or the user ends the debugging loop, it will output directions for the user to follow to move to the next step of the migration.
+7. It iteratively debugs the code for you with context from logs, error messages, relevant files, and directory structure. It does so by choosing one or more actions (move, create, or edit files) then executing them. If it wants to execute any sort of shell script (moving files around), it will first ask for clearance. Finally, if at any point it gets stuck or the user ends the debugging loop, it will output directions for the user to follow to move to the next step of the migration.
 8. The new codebase is completed and exists in `--targetdir`.
 
 ### 📝 Prompt Design
